@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 592857084}
   - component: {fileID: 592857083}
   - component: {fileID: 592857082}
+  - component: {fileID: 592857085}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -207,6 +208,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &592857085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592857081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fff84cbe125cc84cac7862df15af02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIJoystick: {fileID: 1183810508}
+  circle: {fileID: 8946499151965959724, guid: e885531c85717554faa2907a59201f84, type: 3}
+  maxAmplitude: 1
 --- !u!1 &1047939815
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIJoystick: {fileID: 1183810508}
-  maxAmplitude: 0.5
+  maxAmplitude: 0.8
 --- !u!4 &1047939817
 Transform:
   m_ObjectHideFlags: 0
