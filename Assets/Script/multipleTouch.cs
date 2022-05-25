@@ -4,104 +4,67 @@ using UnityEngine;
 
 public class multipleTouch : MonoBehaviour
 {
+    public GameObject UIJoystickOuterCircle;
     public GameObject UIJoystick;
-    public GameObject circle;
-    public List<touchLocation> touches = new List<touchLocation>();
 
-    private Vector3 OriginalTransform;
-    private Vector3 direction;
-    [SerializeField] private float maxAmplitude;
+    private Vector2 OriginalTransform;
+    private int leftTouch = 99;
 
     private void Update()
     {
         int i = 0;
         while (i < Input.touchCount)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Touch t = Input.GetTouch(i);
-            if ((GetTouchPosition(t.position)).x < 0)
+            Vector2 touchPos = GetTouchPosition(t.position);
+            if (t.phase == TouchPhase.Began)
             {
-                if (t.phase == TouchPhase.Began)
+                if (t.position.x > Screen.width / 2)
                 {
-                    Debug.Log("joystick began");
-                    OriginalTransform = mousePos;
-                    touches.Add(new touchLocation(t.fingerId, CreateJoystick(t)));
+                    Interact();
                 }
-                else if (t.phase == TouchPhase.Ended)
+                else
                 {
-                    Debug.Log("joysticks ended");
-                    touchLocation thisTouch = touches.Find(touchLocation => touchLocation.touchID == t.fingerId);
-                    Destroy(thisTouch.circle);
-                    touches.RemoveAt(touches.IndexOf(thisTouch));
-                }
-                else if (t.phase == TouchPhase.Moved)
-                {
-                    Vector3 persistentMousePos = new Vector2(0, 0);
-                    float closestDistanceSqr = Mathf.Infinity;
-                    if (Input.touchCount >= 2)
-                    {
-                        foreach (var item in touches)
-                        {
-                            Vector2 directionToTarget = item.circle.transform.position - OriginalTransform;
-                            float dSqrToTarget = directionToTarget.sqrMagnitude;
-                            if (dSqrToTarget < closestDistanceSqr)
-                            {
-                                closestDistanceSqr = dSqrToTarget;
-                                persistentMousePos = item.circle.transform.position;
-                            }
-                        }
-                    }
-                    Debug.Log("Joystick moved");
-                    direction = persistentMousePos - OriginalTransform;
-                    if (direction.magnitude > maxAmplitude)
-                    {
-                        direction = direction.normalized * maxAmplitude;
-                    }
-                    touchLocation thisTouch = touches.Find(touchLocation => touchLocation.touchID == t.fingerId);
-                    thisTouch.circle.transform.position = direction + OriginalTransform;
-                    Debug.DrawRay(OriginalTransform, direction, Color.red);
+                    leftTouch = t.fingerId;
+                    OriginalTransform = touchPos;
+                    UIJoystickOuterCircle.transform.position = touchPos;
+                    UIJoystick.transform.position = UIJoystickOuterCircle.transform.position;
+                    UIJoystick.SetActive(true);
+                    UIJoystickOuterCircle.SetActive(true);
                 }
             }
-            else
+            else if (t.phase == TouchPhase.Moved && leftTouch == t.fingerId)
             {
-                if (t.phase == TouchPhase.Began)
-                {
-                    Debug.Log("touch began");
-                    touches.Add(new touchLocation(t.fingerId, CreateCircle(t)));
-                }
-                else if (t.phase == TouchPhase.Ended)
-                {
-                    Debug.Log("touch ended");
-                    touchLocation thisTouch = touches.Find(touchLocation => touchLocation.touchID == t.fingerId);
-                    Destroy(thisTouch.circle);
-                    touches.RemoveAt(touches.IndexOf(thisTouch));
-                }
-                else if (t.phase == TouchPhase.Moved)
-                {
-                    Debug.Log("touch moved");
-                }
+                Vector2 offset = touchPos - OriginalTransform;
+                Vector2 direction = Vector2.ClampMagnitude(offset, 1);
+                MoveCharacter(direction);
+
+                UIJoystick.transform.position = new Vector2(UIJoystickOuterCircle.transform.position.x + direction.x, UIJoystickOuterCircle.transform.position.y + direction.y);
+            }
+            else if (t.phase == TouchPhase.Ended && leftTouch == t.fingerId)
+            {
+                leftTouch = 99;
+                UIJoystickOuterCircle.SetActive(false);
+                UIJoystick.SetActive(false);
             }
             i++;
         }
-    }
-    private GameObject CreateCircle(Touch t)
-    {
-        GameObject c = Instantiate(circle) as GameObject;
-        c.name = "Touch" + t.fingerId;
-        c.transform.position = GetTouchPosition(t.position);
-        return c;
+
     }
 
-    private GameObject CreateJoystick(Touch t)
+    private void MoveCharacter(Vector2 direction)
     {
-        GameObject c = Instantiate(UIJoystick) as GameObject;
-        c.name = "Touch" + t.fingerId;
-        c.transform.position = GetTouchPosition(t.position);
-        return c;
+        gameObject.transform.Translate(direction * 2 * Time.deltaTime);
+    }
+
+    private void Interact()
+    {
+        Debug.Log("interacted");
     }
 
     private Vector2 GetTouchPosition(Vector2 touchPosition)
     {
-        return GetComponent<Camera>().ScreenToWorldPoint(new Vector2(touchPosition.x, touchPosition.y));
+        return GetComponentInChildren<Camera>().ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, transform.position.z));
+        
     }
 }
