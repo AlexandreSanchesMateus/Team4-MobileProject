@@ -26,7 +26,7 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private float _rangeMovementAccepted = 1f;
     [SerializeField] private float _moveSpeed;
     public Vector2 direction;
-    public bool canMove = true;
+    public bool playerMovementEnable = true;
     
     [Header("UI Settings")]
     [SerializeField] private GameObject _UIJoystick;
@@ -47,7 +47,7 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void Update()
     {
-        if (!canMove)
+        if (!playerMovementEnable)
             return;
 
         Collider2D[] _info = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
