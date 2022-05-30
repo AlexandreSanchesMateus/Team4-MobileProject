@@ -45,8 +45,8 @@ public class DraggableObj : MonoBehaviour
         {
             transform.position = goodPos.transform.position;
             movable = false;
-            unlockedObj.open = true;
-            Debug.Log("Treasure Unlocked");
+            //unlockedObj.open = true;
+            Debug.Log("Bien place");
             
         }
     }
