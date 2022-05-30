@@ -10,13 +10,13 @@ public class GyroManager : MonoBehaviour
     private bool isGyroEnable = false;
     private bool movementMode;
     private DeviceOrientation _currentScreenOrientation = DeviceOrientation.Unknown;
+    private DeviceOrientation _lastScreenOrientation = DeviceOrientation.Portrait;
 
     private CinemachineVirtualCamera m_vitualCamera;
 
     private float curveTime;
-
+    private Touch originalTouch;
     private Vector3 lastPosition;
-    private bool isMovementEnable;
 
     [Header("General Settings")]
     [SerializeField] private GameObject player;
@@ -33,7 +33,6 @@ public class GyroManager : MonoBehaviour
     [SerializeField] private float _actionSize;
     [SerializeField] private float _actionRotation;
     
-
     private void Start()
     {
         m_vitualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
@@ -47,33 +46,52 @@ public class GyroManager : MonoBehaviour
             // Changement de mode : Portrait ou Paysage
             if (_currentScreenOrientation != Input.deviceOrientation)
             {
-                curveTime += Time.deltaTime;
-
                 switch (Input.deviceOrientation)
                 {
                     case DeviceOrientation.Portrait:
+                        _lastScreenOrientation = DeviceOrientation.Portrait;
                         OrientScreen(_actionSize, _actionRotation);
                         movementMode = true;
                         break;
 
                     case DeviceOrientation.LandscapeLeft:
+                        _lastScreenOrientation = DeviceOrientation.LandscapeLeft;
                         OrientScreen(_movementSize, _movementRotation);
                         movementMode = false;
+                        break;
+
+                    default:
+                        if(_lastScreenOrientation == DeviceOrientation.Portrait)
+                        {
+                            OrientScreen(_actionSize, _actionRotation);
+                            movementMode = true;
+                        }
+                        else if(_lastScreenOrientation == DeviceOrientation.LandscapeLeft)
+                        {
+                            OrientScreen(_movementSize, _movementRotation);
+                            movementMode = false;
+                        }
                         break;
                 }
             }
 
             if(movementMode)
             {
-                InputHandle();
-
-                if (isMovementEnable)
+                if(Input.touchCount > 0)
                 {
-                    Vector3 movement = lastPosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    movement.z = 0;
+                    /*Touch _touch = Input.GetTouch(0);
+                    Debug.Log(_touch.fingerId);
+
+                    if (_touch.phase == TouchPhase.Began)
+                        lastPosition = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+
+                    if (_touch.phase == TouchPhase.Ended && Input.touchCount > 1)
+                        Debug.Log("Attention");*/
+
+                    /*Vector3 movement = lastPosition - Camera.main.ScreenToWorldPoint(_touch.position);
                     _targerCam.transform.position = _targerCam.transform.position + movement * sensitivity;
 
-                    lastPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    lastPosition = Camera.main.ScreenToWorldPoint(_touch.position);*/
                 }
             }
             else
@@ -83,28 +101,16 @@ public class GyroManager : MonoBehaviour
         }
     }
 
-    private void InputHandle()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            lastPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            isMovementEnable = true;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            isMovementEnable = false;
-        }
-    }
-
     private void OrientScreen(float endSize, float endRotation)
     {
+        curveTime += Time.deltaTime;
         m_vitualCamera.m_Lens.OrthographicSize = Mathf.Lerp(m_vitualCamera.m_Lens.OrthographicSize, endSize, _sizeCurve.Evaluate(curveTime));
         m_vitualCamera.transform.rotation = Quaternion.Lerp(m_vitualCamera.transform.rotation, Quaternion.Euler(0, 0, endRotation), _sizeCurve.Evaluate(curveTime));
 
         if (m_vitualCamera.m_Lens.OrthographicSize == endSize && m_vitualCamera.transform.rotation == Quaternion.Euler(0, 0, endRotation))
         {
             _currentScreenOrientation = Input.deviceOrientation;
+            _lastScreenOrientation = DeviceOrientation.Unknown;
             curveTime = 0;
         }
     }
