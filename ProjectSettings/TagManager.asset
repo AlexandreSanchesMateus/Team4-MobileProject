@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Draggable
   - GoodPosition
+  - Cascade
   layers:
   - Default
   - TransparentFX

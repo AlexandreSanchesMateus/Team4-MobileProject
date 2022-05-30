@@ -5,9 +5,10 @@ using UnityEngine;
 public class DraggableObj : MonoBehaviour
 {
     public string nom;
+    private Vector2 boxSize = new Vector2(0.1f, 1f);
 
     // Class
-    public UnlockedObj unlockedObj;
+    //public UnlockedObj unlockedObj;
 
     // GameObject
     public GameObject goodPos;
@@ -25,10 +26,7 @@ public class DraggableObj : MonoBehaviour
         initialPos = transform.position;
     }
 
-    public void Update()
-    {
-        
-    }
+    
     public void OnMouseDown()
     {
         draggOffset = transform.position - GetMousePos();
@@ -45,9 +43,9 @@ public class DraggableObj : MonoBehaviour
         {
             transform.position = goodPos.transform.position;
             movable = false;
+            CheckInteraction();
             //unlockedObj.open = true;
-            Debug.Log("Bien place");
-            
+                      
         }
     }
 
@@ -71,5 +69,22 @@ public class DraggableObj : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
         return mousePos;
+    }
+
+    private void CheckInteraction()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0, Vector2.zero);
+
+        if (hits.Length > 0)
+        {
+            foreach (RaycastHit2D rc in hits)
+            {
+                if (rc.transform.GetComponent<Interactable>())
+                {
+                    rc.transform.GetComponent<Interactable>().Interact();
+                    return;
+                }
+            }
+        }
     }
 }

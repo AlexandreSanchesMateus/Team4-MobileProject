@@ -24,6 +24,7 @@ public class Openable : Interactable
 
     private void Start()
     {
+
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = closed;
     }
