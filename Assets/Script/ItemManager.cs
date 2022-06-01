@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 public class ItemManager : MonoBehaviour
 {
-    public static ItemManager Instance { get; private set; }    
+    public static ItemManager Instance { get; private set; }
 
+    private Animator _animator;
 
-    [SerializeField] private List<item>itemList = new List<item>();
     public List<item> playerItems { get; private set; }
-
-
-    private Transform baseTransform;
-    private Vector2 orientation;
-
     [SerializeField] private float spacer = 50f;
+    [SerializeField] private List<item>itemList = new List<item>();
+    
+    
 
     private void Start()
     {
+        _animator = gameObject.GetComponent<Animator>();
+
         Instance = this;
         playerItems = new List<item>();
         AddItem("blue");
@@ -28,7 +28,7 @@ public class ItemManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RemoveItemFromViewport(playerItems[0]);
+            RemoveItem(playerItems[0]);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
@@ -48,6 +48,40 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+    
+    public void RemoveItem(item itemToRemove)
+    {
+        int thisIndex = itemToRemove.m_Index;
+        Destroy(itemToRemove.m_GameObject);
+        playerItems.Remove(itemToRemove);
+        for (int i = thisIndex; i < playerItems.Count; i++)
+        {
+            playerItems[i].m_GameObject.transform.localPosition = new Vector3(spacer * i, transform.position.y, transform.position.z);
+            playerItems[i].m_Index = i;
+        }
+    }
+
+    public void EnableItemManager()
+    {
+        Debug.Log("ItemActive");
+        // _animator.SetBool(0, true);
+    }
+
+    public void DisableItemManager()
+    {
+        Debug.Log("ItemDesactive");
+        // _animator.SetBool(0, false);
+    }
+
+    public bool IsItemInInventory(string _name)
+    {
+        foreach (item other in playerItems)
+        {
+            if(other.m_name == _name)
+                return true;
+        }
+        return false;
+    }
 
     private void AddItemToViewport(item itemToAdd)
     {
@@ -59,17 +93,5 @@ public class ItemManager : MonoBehaviour
         itemToAdd.m_GameObject = thisImage;
         itemToAdd.m_Index = playerItems.Count - 1;
         thisImage.transform.localPosition = new Vector3(spacer * (playerItems.Count-1), transform.position.y, transform.position.z);
-    }
-
-    private void RemoveItemFromViewport(item itemToRemove)
-    {
-        int thisIndex = itemToRemove.m_Index;
-        Destroy(itemToRemove.m_GameObject);
-        playerItems.Remove(itemToRemove);
-        for (int i = thisIndex; i < playerItems.Count; i++)
-        {
-            playerItems[i].m_GameObject.transform.localPosition = new Vector3(spacer * i, transform.position.y, transform.position.z);
-            playerItems[i].m_Index = i;
-        }
     }
 }

@@ -9,7 +9,7 @@ public class GyroManager : MonoBehaviour
     public static GyroManager Instance { get; set; }
 
     private bool isGyroEnable = false;
-    private bool movementMode = false;
+    private bool portraitMode = false;
     private DeviceOrientation _currentScreenOrientation;
     private DeviceOrientation _lastScreenOrientation = DeviceOrientation.Unknown;
 
@@ -50,7 +50,7 @@ public class GyroManager : MonoBehaviour
             vitualCamera.m_Lens.OrthographicSize = _actionSize;
             vitualCamera.transform.rotation = Quaternion.Euler(0, 0, _actionRotation);
             _currentScreenOrientation = DeviceOrientation.Portrait;
-            movementMode = true;
+            portraitMode = true;
            
         }
         else
@@ -65,55 +65,7 @@ public class GyroManager : MonoBehaviour
     {
         if (isGyroEnable)
         {
-            // Changement de mode : Portrait ou Paysage
-           if (_currentScreenOrientation != Input.deviceOrientation)
-           {
-               switch (Input.deviceOrientation)
-               {
-                   case DeviceOrientation.Portrait:
-                       _lastScreenOrientation = DeviceOrientation.Portrait;
-                       OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
-                       movementMode = true;
-                       break;
-
-                   case DeviceOrientation.LandscapeLeft:
-                       _lastScreenOrientation = DeviceOrientation.LandscapeLeft;
-                       OrientScreen(_actionSize, _actionRotation, _movementSize, _movementRotation,DeviceOrientation.LandscapeLeft, false);
-                       movementMode = false;
-                       break;
-
-                   default:
-                       if(_lastScreenOrientation == DeviceOrientation.Portrait)
-                       {
-                           OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
-                            Debug.Log("Boo");
-                            movementMode = true;
-                       }
-                       else if(_lastScreenOrientation == DeviceOrientation.LandscapeLeft)
-                       {
-                           OrientScreen(_actionSize, _actionRotation, _movementSize, _movementRotation, DeviceOrientation.LandscapeLeft, false);
-                           movementMode = false;
-                       }
-                       break;
-               }
-           }
-           else if(_lastScreenOrientation != DeviceOrientation.Unknown)
-           {
-               if (_lastScreenOrientation == DeviceOrientation.Portrait)
-               {
-                   OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.LandscapeLeft, true);
-                   movementMode = true;
-               }
-               else
-               {
-                   OrientScreen(_actionSize, _actionRotation, _movementSize, _movementRotation, DeviceOrientation.Portrait, true);
-                   movementMode = false;
-               }
-           }
-
-            PlayerMovement2.Instance.playerMovementEnable = !movementMode;
-            
-            if(movementMode)
+            if(portraitMode)
             {
                 // Focus Camera
                 if (Input.touchCount == 2)
@@ -170,6 +122,64 @@ public class GyroManager : MonoBehaviour
             {
                 _targerCam.transform.position = PlayerMovement2.Instance.gameObject.transform.position;
             }
+
+
+
+            // Changement de mode : Portrait ou Paysage
+            if (_currentScreenOrientation != Input.deviceOrientation)
+            {
+                switch (Input.deviceOrientation)
+                {
+                    case DeviceOrientation.Portrait:
+                        _lastScreenOrientation = DeviceOrientation.Portrait;
+                        OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
+                        portraitMode = true;
+                        break;
+
+                    case DeviceOrientation.LandscapeLeft:
+                        _lastScreenOrientation = DeviceOrientation.LandscapeLeft;
+                        OrientScreen(_actionSize, _actionRotation, _movementSize, _movementRotation, DeviceOrientation.LandscapeLeft, false);
+                        portraitMode = false;
+                        break;
+
+                    default:
+                        if (_lastScreenOrientation == DeviceOrientation.Portrait)
+                        {
+                            OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
+                            Debug.Log("Boo");
+                            portraitMode = true;
+                        }
+                        else if (_lastScreenOrientation == DeviceOrientation.LandscapeLeft)
+                        {
+                            OrientScreen(_actionSize, _actionRotation, _movementSize, _movementRotation, DeviceOrientation.LandscapeLeft, false);
+                            portraitMode = false;
+                        }
+                        break;
+                }
+            }
+            else if (_lastScreenOrientation != DeviceOrientation.Unknown)
+            {
+                if (_lastScreenOrientation == DeviceOrientation.Portrait)
+                {
+                    OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.LandscapeLeft, true);
+                    portraitMode = true;
+                }
+                else
+                {
+                    OrientScreen(_actionSize, _actionRotation, _movementSize, _movementRotation, DeviceOrientation.Portrait, true);
+                    portraitMode = false;
+                }
+            }
+            else
+                return;
+
+            PlayerMovement2.Instance.playerMovementEnable = !portraitMode;
+
+            if (_currentScreenOrientation == DeviceOrientation.Portrait)
+                ItemManager.Instance.EnableItemManager();
+            else
+                ItemManager.Instance.DisableItemManager();
+
         }
     }
     
