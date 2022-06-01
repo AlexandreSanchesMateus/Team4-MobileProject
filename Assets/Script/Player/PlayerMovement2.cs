@@ -62,14 +62,6 @@ public class PlayerMovement2 : MonoBehaviour
         {
             if(_touch.phase == TouchPhase.Began)
             {
-                /*if (_movementFingerID != -1)
-                    Interaction();
-                else
-                {
-                    _startPosition = _touch.position;
-                    _coroutine = StartCoroutine(AssignedMovementTouch(_touch));
-                }*/
-
                 if (_movementFingerID == -1)
                 {
                     _startPosition = _touch.position;
@@ -77,27 +69,9 @@ public class PlayerMovement2 : MonoBehaviour
                         StopCoroutine(_coroutine);
                     _coroutine = StartCoroutine(AssignedMovementTouch(_touch));
                 }
-
-                /*if (Input.touchCount > 1)
-                    Debug.Log("Interaction");
-                else
-                {
-                    _startScreenPosition = _touch.position;
-                    _mouvementFingerID = _touch.fingerId;
-
-                    UIJoystick.transform.position = _startScreenPosition;
-                    UIJoystickOuterCircle.transform.position = _startScreenPosition;
-                    UIJoystick.SetActive(true);
-                    UIJoystickOuterCircle.SetActive(true);
-                }*/
-
             }
             else if ((_touch.phase == TouchPhase.Moved || _touch.phase == TouchPhase.Stationary))
             {
-                    /*Vector3 worldPositionTouch = Camera.main.ScreenToWorldPoint(_touch.position);
-
-                    direction = worldPositionTouch - Camera.main.ScreenToWorldPoint(_startPosition);
-                    direction = Vector2.ClampMagnitude(direction, _maxAmplitude);*/
                 
                 if (_touch.fingerId == _movementFingerID)
                 {
@@ -124,18 +98,24 @@ public class PlayerMovement2 : MonoBehaviour
             {
                 if (_touch.fingerId == _movementFingerID)
                 {
-                    direction = Vector2.zero;
-                    _UIJoystick.SetActive(false);
-                    _UIJoystickOuterCircle.SetActive(false);
-                    _movementFingerID = -1;
+                    DisableTouche();
                 }
                 else
                 {
-                    StopCoroutine(_coroutine);
+                    if(_coroutine != null)
+                        StopCoroutine(_coroutine);
                     Interaction(Camera.main.ScreenToWorldPoint(_touch.position));
                 }
             }
         }
+    }
+
+    public void DisableTouche()
+    {
+        direction = Vector2.zero;
+        _UIJoystick.SetActive(false);
+        _UIJoystickOuterCircle.SetActive(false);
+        _movementFingerID = -1;
     }
 
     private void FixedUpdate()

@@ -846,8 +846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f229c7154c6e574e984aca832e64944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList: []
   spacer: 50
+  itemList: []
 --- !u!1 &1325201329
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,8 +1252,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2088047587}
   - component: {fileID: 2088047586}
-  - component: {fileID: 2088047588}
   - component: {fileID: 2088047589}
+  - component: {fileID: 2088047588}
+  - component: {fileID: 2088047590}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -1290,7 +1291,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7398437, y: 1}
+    m_SensorSize: {x: 1.7679688, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1380,10 +1381,10 @@ MonoBehaviour:
   _zoomSpeed: 0.1
   _minFocus: 2
   _maxFocus: 10
-  _movementSize: 5
-  _movementRotation: 90
-  _actionSize: 6
-  _actionRotation: 0
+  _portraitSize: 6
+  _portraitRotation: 0
+  _landscapeSize: 5
+  _landscapeRotation: 90
   _currentSize: 0
 --- !u!114 &2088047589
 MonoBehaviour:
@@ -1402,6 +1403,24 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 697925523}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!114 &2088047590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088047584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d3d30dc6a70b44cb8a90b8be59c6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portraitModeEnable: 0
+  _targerCam: {fileID: 631569874}
+  _sensitivity: 2
+  _zoomSpeed: 0.1
+  _minFocus: 2
+  _maxFocus: 10
 --- !u!1001 &3534951511871340610
 PrefabInstance:
   m_ObjectHideFlags: 0
