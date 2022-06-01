@@ -141,11 +141,11 @@ public class PlayerMovement2 : MonoBehaviour
     private void FixedUpdate()
     {
         if(direction.magnitude > 0.1f)
-            _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f), ForceMode2D.Impulse);
+            _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
 
         if (jump)
         {
-            _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime), ForceMode2D.Impulse);
+            _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
             jump = false;
         }
     }
