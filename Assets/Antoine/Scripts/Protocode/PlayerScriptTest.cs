@@ -7,10 +7,15 @@ public class PlayerScriptTest : MonoBehaviour
     private float horizontal;
     private float vertical;
 
+    // A rajouter !
     public bool onLadder;
 
     public float speed = 7f;
+    public float initSpeed;
     public float speedLad = 3f;
+    public float initSpeedLad;
+
+    //
 
     private Vector3 vecRef = Vector3.zero;
     [Range(0f, 0.3f)] [SerializeField] private float smooth = 0.1f;
@@ -19,8 +24,12 @@ public class PlayerScriptTest : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // A rajouter ! 
         onLadder = false;
-        
+        initSpeed = speed;
+        initSpeedLad = speedLad;
+        //  
     }
     private void Update()
     {
@@ -29,14 +38,25 @@ public class PlayerScriptTest : MonoBehaviour
     }
     void FixedUpdate()
     {       
-        
+        // A rajouter !
 
         if(onLadder == true)
+        {
         GrindLadder(vertical * speedLad * Time.fixedDeltaTime);
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
+
+        }
 
         else
+        {
         Movement(horizontal * speed * Time.fixedDeltaTime);
-
+        rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+           gameObject.GetComponent<Rigidbody2D>().gravityScale = 1f;
+            
+        }
+        //
     }
     void Movement(float velocity)
     {

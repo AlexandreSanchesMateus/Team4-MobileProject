@@ -8,9 +8,18 @@ public class PlayerIntPreset : MonoBehaviour
 
     private Vector2 boxSize = new Vector2(0.1f, 1f);
 
+    // Booleans
+
+    public bool inLayer1;
+    public bool inLayer2;
+    public bool inLayer3;
+    public bool inLayer4;
+    public bool inLayer5;
+    public bool inLayer6;
+
     private void Start()
     {
-        
+        inLayer1 = true;
     }
 
     private void Update()
@@ -18,6 +27,19 @@ public class PlayerIntPreset : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             CheckInteraction();
 
+        if (inLayer1 == true)
+        {
+            Physics2D.IgnoreLayerCollision(6, 7);
+            gameObject.layer = 6;
+        }
+            
+
+        if (inLayer2 == true)
+        {
+            Physics2D.IgnoreLayerCollision(7, 6);
+            gameObject.layer = 7;
+        }
+            
     }
 
     public void OpenInteractableIcon()
