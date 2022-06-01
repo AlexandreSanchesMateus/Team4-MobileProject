@@ -73,6 +73,8 @@ public class PlayerMovement2 : MonoBehaviour
                 if (_movementFingerID == -1)
                 {
                     _startPosition = _touch.position;
+                    if(_coroutine != null)
+                        StopCoroutine(_coroutine);
                     _coroutine = StartCoroutine(AssignedMovementTouch(_touch));
                 }
 
@@ -175,6 +177,7 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void InitTouch(Touch m_touch)
     {
+        StopAllCoroutines();
         _movementFingerID = m_touch.fingerId;
         _UIJoystick.transform.position = _startPosition;
         _UIJoystickOuterCircle.transform.position = _startPosition;

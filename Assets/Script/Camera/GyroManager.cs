@@ -6,14 +6,14 @@ using Cinemachine;
 
 public class GyroManager : MonoBehaviour
 {
-    private Gyroscope _gyroscope;
+    public static GyroManager Instance { get; set; }
+
     private bool isGyroEnable = false;
     private bool movementMode = false;
     private DeviceOrientation _currentScreenOrientation;
     private DeviceOrientation _lastScreenOrientation = DeviceOrientation.Unknown;
 
     private CinemachineVirtualCamera vitualCamera;
-    private CinemachineConfiner2D confiner2D;
 
     private float curveTime;
     private Vector3 _lastPosition;
@@ -34,10 +34,14 @@ public class GyroManager : MonoBehaviour
     [Header("Action Mode Settings")]
     [SerializeField] private float _actionSize;
     [SerializeField] private float _actionRotation;
+
+    [HideInInspector] public float _currentSize;
     
 
     private void Start()
     {
+        Instance = this;
+
         vitualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
         isGyroEnable = EnableGyro();
 
@@ -47,12 +51,14 @@ public class GyroManager : MonoBehaviour
             vitualCamera.transform.rotation = Quaternion.Euler(0, 0, _actionRotation);
             _currentScreenOrientation = DeviceOrientation.Portrait;
             movementMode = true;
+           
         }
         else
         {
             vitualCamera.m_Lens.OrthographicSize = _movementSize;
             vitualCamera.transform.rotation = Quaternion.Euler(0, 0, _movementRotation);
             _currentScreenOrientation = DeviceOrientation.LandscapeLeft;
+            
         }
     }
 
@@ -67,7 +73,7 @@ public class GyroManager : MonoBehaviour
                {
                    case DeviceOrientation.Portrait:
                        _lastScreenOrientation = DeviceOrientation.Portrait;
-                       OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
+                       OrientScreen(_currentSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
                        movementMode = true;
                        break;
 
@@ -81,7 +87,8 @@ public class GyroManager : MonoBehaviour
                        if(_lastScreenOrientation == DeviceOrientation.Portrait)
                        {
                            OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
-                           movementMode = true;
+                            Debug.Log("Boo");
+                            movementMode = true;
                        }
                        else if(_lastScreenOrientation == DeviceOrientation.LandscapeLeft)
                        {
@@ -126,6 +133,7 @@ public class GyroManager : MonoBehaviour
                         vitualCamera.m_Lens.OrthographicSize -= zoomModifier;
 
                     vitualCamera.m_Lens.OrthographicSize = Mathf.Clamp(vitualCamera.m_Lens.OrthographicSize, _minFocus, _maxFocus);
+                    _currentSize = vitualCamera.m_Lens.OrthographicSize;
 
                     // Mouvement Camera pendant zoom
                     Vector2 middlePos = (Camera.main.ScreenToWorldPoint(firstTouch.position) + Camera.main.ScreenToWorldPoint(secondTouch.position)) / 2;
@@ -146,7 +154,12 @@ public class GyroManager : MonoBehaviour
 
                     if (_touch.phase == TouchPhase.Began)
                     {
-                        _lastPosition = Camera.main.ScreenToWorldPoint(_touch.position);
+                        if (Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(_touch.position), 0.2f).gameObject.CompareTag("Interactible"))
+                        {
+                            // Drag and drop
+                        }
+                        else
+                            _lastPosition = Camera.main.ScreenToWorldPoint(_touch.position);
                     }
                     else if (_touch.phase == TouchPhase.Moved)
                     {
@@ -207,8 +220,7 @@ public class GyroManager : MonoBehaviour
         if (SystemInfo.supportsGyroscope)
         {
             Debug.Log("Gyroscope Enable");
-            _gyroscope = Input.gyro;
-            _gyroscope.enabled = true;
+            Input.gyro.enabled = true;
 
             return true;
         }
