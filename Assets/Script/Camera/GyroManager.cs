@@ -58,7 +58,6 @@ public class GyroManager : MonoBehaviour
             vitualCamera.m_Lens.OrthographicSize = _movementSize;
             vitualCamera.transform.rotation = Quaternion.Euler(0, 0, _movementRotation);
             _currentScreenOrientation = DeviceOrientation.LandscapeLeft;
-            
         }
     }
 
@@ -73,7 +72,7 @@ public class GyroManager : MonoBehaviour
                {
                    case DeviceOrientation.Portrait:
                        _lastScreenOrientation = DeviceOrientation.Portrait;
-                       OrientScreen(_currentSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
+                       OrientScreen(_movementSize, _movementRotation, _actionSize, _actionRotation, DeviceOrientation.Portrait, false);
                        movementMode = true;
                        break;
 
@@ -133,7 +132,7 @@ public class GyroManager : MonoBehaviour
                         vitualCamera.m_Lens.OrthographicSize -= zoomModifier;
 
                     vitualCamera.m_Lens.OrthographicSize = Mathf.Clamp(vitualCamera.m_Lens.OrthographicSize, _minFocus, _maxFocus);
-                    _currentSize = vitualCamera.m_Lens.OrthographicSize;
+                    // _currentSize = vitualCamera.m_Lens.OrthographicSize;
 
                     // Mouvement Camera pendant zoom
                     Vector2 middlePos = (Camera.main.ScreenToWorldPoint(firstTouch.position) + Camera.main.ScreenToWorldPoint(secondTouch.position)) / 2;
