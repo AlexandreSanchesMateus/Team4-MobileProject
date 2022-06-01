@@ -11,8 +11,7 @@ public class ItemManager : MonoBehaviour
 
     public List<item> playerItems { get; private set; }
     [SerializeField] private float spacer = 50f;
-    [SerializeField] private List<item>itemList = new List<item>();
-    
+    [SerializeField] private List<item>itemList = new List<item>();    
     
 
     private void Start()
@@ -22,6 +21,7 @@ public class ItemManager : MonoBehaviour
         Instance = this;
         playerItems = new List<item>();
         AddItem("blue");
+        AddItem("red");
     }
 
     private void Update()
@@ -61,16 +61,9 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void EnableItemManager()
+    public void EnableItemManager(bool active)
     {
-        Debug.Log("ItemActive");
-        // _animator.SetBool(0, true);
-    }
-
-    public void DisableItemManager()
-    {
-        Debug.Log("ItemDesactive");
-        // _animator.SetBool(0, false);
+        _animator.SetBool("Active", active);
     }
 
     public bool IsItemInInventory(string _name)
@@ -87,7 +80,7 @@ public class ItemManager : MonoBehaviour
     {
         GameObject thisImage = new GameObject();
         thisImage.transform.parent = transform;
-        thisImage.AddComponent<RectTransform>().localScale = new Vector3(2,2);
+        thisImage.AddComponent<RectTransform>().localScale = new Vector3(5,5);
         thisImage.AddComponent<CanvasRenderer>();
         thisImage.AddComponent<Image>().sprite = itemToAdd.m_Sprite;
         itemToAdd.m_GameObject = thisImage;

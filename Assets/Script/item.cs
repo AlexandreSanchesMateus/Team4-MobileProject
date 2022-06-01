@@ -14,6 +14,5 @@ public class item
     public string m_name;
     public Sprite m_Sprite;
     [HideInInspector] public GameObject m_GameObject;
-    public int m_Index;
-
+    [HideInInspector] public int m_Index;
 }

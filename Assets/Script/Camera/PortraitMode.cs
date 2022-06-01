@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class PortraitMode : MonoBehaviour
@@ -9,6 +10,9 @@ public class PortraitMode : MonoBehaviour
 
     private Vector2 _lastPosition;
     private CinemachineVirtualCamera vitualCamera;
+    private item _selectedItem = null;
+
+    public float radius;
 
     [SerializeField] private GameObject _targerCam;
     [SerializeField] private float _sensitivity = 2;
@@ -63,16 +67,36 @@ public class PortraitMode : MonoBehaviour
 
                 if (_touch.phase == TouchPhase.Began)
                 {
-                    if (Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(_touch.position), 0.2f).gameObject.CompareTag("Interactible"))
+
+                    // ###########################        Selection      ########################### //
+
+
+                    item currentPressedItem = SelectColor(_touch.position);
+
+                    if(currentPressedItem != null)
                     {
-                        // Drag and drop
+                        if (currentPressedItem != _selectedItem)
+                        {
+                            _selectedItem = currentPressedItem;
+                            Debug.Log("Couleur " + _selectedItem.m_name + " est selectionné");
+                        }
+                        else
+                        {
+                            _selectedItem = null;
+                            Debug.Log("Couleur " + currentPressedItem.m_name + " est désactiver");
+                        }
+                    }
+                    else if (Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(_touch.position), 0.2f).gameObject.CompareTag("Interactible"))
+                    {
+                        Debug.Log("Object Interactible");
                     }
                     else
                         _lastPosition = Camera.main.ScreenToWorldPoint(_touch.position);
                 }
                 else if (_touch.phase == TouchPhase.Moved)
                 {
-                    CameraMovement(Camera.main.ScreenToWorldPoint(_touch.position));
+                    if(_selectedItem == null)
+                        CameraMovement(Camera.main.ScreenToWorldPoint(_touch.position));
                 }
             }
         }
@@ -88,5 +112,20 @@ public class PortraitMode : MonoBehaviour
         movement.z = 0;
         _targerCam.transform.position = _targerCam.transform.position + movement * _sensitivity;
         _lastPosition = position;
+    }
+
+    private item SelectColor(Vector2 position)
+    {
+        foreach(item other in ItemManager.Instance.playerItems)
+        {
+            Sprite otherSprite = other.m_GameObject.GetComponent<Image>().sprite;
+            float widthDiv = otherSprite.rect.width / 2;
+            float heightDiv = otherSprite.rect.height / 2;
+
+            if ((position.x < other.m_GameObject.transform.position.x + widthDiv && position.x > other.m_GameObject.transform.position.x - widthDiv)
+                && (position.y < other.m_GameObject.transform.position.y + heightDiv && position.y > other.m_GameObject.transform.position.y - heightDiv))
+                return other;
+        }
+        return null;
     }
 }

@@ -46,6 +46,7 @@ public class GyroManager : MonoBehaviour
             _last = true;
             PlayerMovement2.Instance.playerMovementEnable = false;
             _portraitMode.portraitModeEnable = true;
+            ItemManager.Instance.EnableItemManager(true);
 
             vitualCamera.m_Lens.OrthographicSize = _portraitSize;
             vitualCamera.transform.rotation = Quaternion.Euler(0, 0, _portraitRotation);;
@@ -58,6 +59,7 @@ public class GyroManager : MonoBehaviour
             _last = false;
             PlayerMovement2.Instance.playerMovementEnable = true;
             _portraitMode.portraitModeEnable = false;
+            ItemManager.Instance.EnableItemManager(false);
 
             vitualCamera.m_Lens.OrthographicSize = _landscapeSize;
             vitualCamera.transform.rotation = Quaternion.Euler(0, 0, _landscapeRotation);
@@ -111,6 +113,7 @@ public class GyroManager : MonoBehaviour
         }
         else
         {
+            ItemManager.Instance.EnableItemManager(false);
             vitualCamera.m_Lens.OrthographicSize = Mathf.Lerp(_portraitSize, _landscapeSize, _sizeCurve.Evaluate(curveTime));
             vitualCamera.transform.rotation = Quaternion.Lerp(Quaternion.Euler(0, 0, _portraitRotation), Quaternion.Euler(0, 0, _landscapeRotation), _sizeCurve.Evaluate(curveTime));
         }
@@ -129,8 +132,9 @@ public class GyroManager : MonoBehaviour
 
                 PlayerMovement2.Instance.DisableTouche();
                 PlayerMovement2.Instance.playerMovementEnable = false;
-
                 _portraitMode.portraitModeEnable = true;
+
+                ItemManager.Instance.EnableItemManager(true);
             }
             else
             {
