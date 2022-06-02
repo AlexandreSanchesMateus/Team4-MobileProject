@@ -19,7 +19,7 @@ public class PlayerScriptTest : MonoBehaviour
 
     private Vector3 vecRef = Vector3.zero;
     [Range(0f, 0.3f)] [SerializeField] private float smooth = 0.1f;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     private void Awake()
     {
