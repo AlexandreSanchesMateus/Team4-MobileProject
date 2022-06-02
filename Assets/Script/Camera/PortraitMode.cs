@@ -10,7 +10,7 @@ public class PortraitMode : MonoBehaviour
 
     private Vector2 _lastPosition;
     private CinemachineVirtualCamera vitualCamera;
-    private item _selectedItem = null;
+    private Item _selectedItem = null;
 
     public float radius;
 
@@ -71,7 +71,7 @@ public class PortraitMode : MonoBehaviour
                     // ###########################        Selection      ########################### //
 
 
-                    item currentPressedItem = SelectColor(_touch.position);
+                    Item currentPressedItem = SelectColor(_touch.position);
 
                     if(currentPressedItem != null)
                     {
@@ -83,6 +83,7 @@ public class PortraitMode : MonoBehaviour
                         else
                         {
                             _selectedItem = null;
+                            _lastPosition = Camera.main.ScreenToWorldPoint(_touch.position);
                             Debug.Log("Couleur " + currentPressedItem.m_name + " est désactiver");
                         }
                     }
@@ -114,9 +115,9 @@ public class PortraitMode : MonoBehaviour
         _lastPosition = position;
     }
 
-    private item SelectColor(Vector2 position)
+    private Item SelectColor(Vector2 position)
     {
-        foreach(item other in ItemManager.Instance.playerItems)
+        foreach(Item other in ItemManager.Instance.playerItems)
         {
             Sprite otherSprite = other.m_GameObject.GetComponent<Image>().sprite;
             float widthDiv = otherSprite.rect.width / 2;

@@ -87,14 +87,14 @@ public class GyroManager : MonoBehaviour
             if(_last != _portrait)
             {
                 isReorienting = true;
-                TestOrient(false);
+                OrientScreen(false);
             }
             else if (isReorienting)
-                TestOrient(true);
+                OrientScreen(true);
         }
     }
     
-    private void TestOrient(bool isRevers)
+    private void OrientScreen(bool isRevers)
     {
         int finalValue = 1;
         if (isRevers)

@@ -9,9 +9,9 @@ public class ItemManager : MonoBehaviour
 
     private Animator _animator;
 
-    public List<item> playerItems { get; private set; }
+    public List<Item> playerItems { get; private set; }
     [SerializeField] private float spacer = 50f;
-    [SerializeField] private List<item>itemList = new List<item>();    
+    [SerializeField] private List<Item> itemList = new List<Item>();    
     
 
     private void Start()
@@ -19,7 +19,7 @@ public class ItemManager : MonoBehaviour
         _animator = gameObject.GetComponent<Animator>();
 
         Instance = this;
-        playerItems = new List<item>();
+        playerItems = new List<Item>();
         AddItem("blue");
         AddItem("red");
     }
@@ -38,18 +38,18 @@ public class ItemManager : MonoBehaviour
 
     public void AddItem(string name)
     {
-        foreach (item thisItem in itemList)
+        foreach (Item thisItem in itemList)
         {
             if (thisItem.m_name == name)
             {
-                item newItem = (new item(thisItem));
+                Item newItem = (new Item(thisItem));
                 playerItems.Add(newItem);
                 AddItemToViewport(newItem);
             }
         }
     }
     
-    public void RemoveItem(item itemToRemove)
+    public void RemoveItem(Item itemToRemove)
     {
         int thisIndex = itemToRemove.m_Index;
         Destroy(itemToRemove.m_GameObject);
@@ -68,7 +68,7 @@ public class ItemManager : MonoBehaviour
 
     public bool IsItemInInventory(string _name)
     {
-        foreach (item other in playerItems)
+        foreach (Item other in playerItems)
         {
             if(other.m_name == _name)
                 return true;
@@ -76,7 +76,7 @@ public class ItemManager : MonoBehaviour
         return false;
     }
 
-    private void AddItemToViewport(item itemToAdd)
+    private void AddItemToViewport(Item itemToAdd)
     {
         GameObject thisImage = new GameObject();
         thisImage.transform.parent = transform;
