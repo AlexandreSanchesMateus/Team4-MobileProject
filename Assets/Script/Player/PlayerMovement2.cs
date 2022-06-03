@@ -27,6 +27,7 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     public Vector2 direction;
     public bool playerMovementEnable = true;
+    public bool usingLayerChanger = false;
     
     [Header("UI Settings")]
     [SerializeField] private GameObject _UIJoystick;
@@ -120,13 +121,21 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(direction.magnitude > 0.1f)
-            _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
-
-        if (jump)
+        if (usingLayerChanger)
         {
-            _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
-            jump = false;
+            if (direction.magnitude > 0.1f)
+                _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
+
+            if (jump)
+            {
+                _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
+                jump = false;
+            }
+        }
+        else
+        {
+            if (direction.magnitude > 0.1f)
+                _rb.AddForce(new Vector2( 0f, (direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
         }
     }
 
