@@ -4,9 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TrapTrigger
+  - Draggable
+  - GoodPosition
+  - Cascade
   - Platform
   - Interactible
+  - TrapTrigger
   layers:
   - Default
   - TransparentFX
@@ -14,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Layer1
+  - Layer2
+  - Interactible
   - 
   - 
   - 

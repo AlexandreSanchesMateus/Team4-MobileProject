@@ -7,13 +7,14 @@ public class Elevator : Interactable
     // Int / float
 
     public float speed = 1;
+    public float percent;
 
     // Gameobject
     public GameObject depart1;
     public GameObject depart2;
 
     // Class
-    public PlayerScriptTest playerMov;
+    public PlayerMovement2 playerMov;
     
 
     // Booleans
@@ -23,12 +24,12 @@ public class Elevator : Interactable
     public override void Interact()
     {
         Debug.Log("Interaction avec l'échelle");
-        playerMov.GetComponent<PlayerScriptTest>().enabled = false;
-        playerMov.rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-        playerMov.GetComponent<BoxCollider2D>().isTrigger = true;
+        PlayerMovement2.Instance.playerMovementEnable = false;
+        playerMov._rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+        playerMov.GetComponent<CapsuleCollider2D>().isTrigger = true;
         playerMov.GetComponent<Rigidbody2D>().gravityScale = 0f;
-        playerMov.GetComponent<PlayerIntPreset>().enabled = false;
-        
+
+              
         elevating = true;
 
         if(swap == false)
@@ -45,10 +46,17 @@ public class Elevator : Interactable
         if(elevating == true)
         {
             if(swap == true)
+            {
             playerMov.transform.position = playerMov.transform.position + new Vector3(0, speed ,0);
+            GyroManager.Instance.isGyroEnable = false;
+            }
 
-            else
+
+
+            else           
             playerMov.transform.position = playerMov.transform.position - new Vector3(0, speed , 0);
+                       
+            
         }
     }
 }

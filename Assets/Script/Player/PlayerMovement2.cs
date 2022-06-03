@@ -10,7 +10,7 @@ public class PlayerMovement2 : MonoBehaviour
     private int _movementFingerID = -1;
     private Coroutine _coroutine;
 
-    private Rigidbody2D _rb;
+    public Rigidbody2D _rb;
     private bool canJump = false;
     private bool jump = false;
 
@@ -153,6 +153,7 @@ public class PlayerMovement2 : MonoBehaviour
             if (other.gameObject.CompareTag("Interactible"))
             {
                 Debug.Log("INTERACTION");
+                other.gameObject.GetComponent<Elevator>().Interact();
                 return;
             }
         }

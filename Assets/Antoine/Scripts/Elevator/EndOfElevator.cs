@@ -11,15 +11,20 @@ public class EndOfElevator : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Arrivé");
-            elevator.playerMov.GetComponent<PlayerScriptTest>().enabled = true;
-            elevator.playerMov.rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
-            elevator.playerMov.GetComponent<BoxCollider2D>().isTrigger = false;
+            PlayerMovement2.Instance.playerMovementEnable = true;
+            elevator.playerMov._rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+            elevator.playerMov._rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            elevator.playerMov.GetComponent<CapsuleCollider2D>().isTrigger = false;
             elevator.playerMov.GetComponent<Rigidbody2D>().gravityScale = 1f;
-            elevator.playerMov.GetComponent<PlayerIntPreset>().enabled = true;
+            
+            //elevator.playerMov.GetComponent<PlayerIntPreset>().enabled = true;
             
             elevator.elevating = false;
             gameObject.SetActive(false);
             otherArrivee.SetActive(true);
+
+            if(GyroManager.Instance.isGyroEnable == false)
+            GyroManager.Instance.isGyroEnable = true;
         }
     }
 }
