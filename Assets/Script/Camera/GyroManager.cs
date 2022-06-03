@@ -9,7 +9,7 @@ public class GyroManager : MonoBehaviour
     public static GyroManager Instance { get; set; }
 
     private bool isGyroEnable = false;
-    private bool _portrait;
+    public bool _portrait;
     private bool _last;
     private bool isReorienting;
 

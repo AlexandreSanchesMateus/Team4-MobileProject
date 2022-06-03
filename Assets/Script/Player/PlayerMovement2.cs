@@ -121,7 +121,7 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (usingLayerChanger)
+        if (!usingLayerChanger)
         {
             if (direction.magnitude > 0.1f)
                 _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
