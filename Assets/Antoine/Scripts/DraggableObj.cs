@@ -29,31 +29,43 @@ public class DraggableObj : MonoBehaviour
     
     public void OnMouseDown()
     {
-        draggOffset = transform.position - GetMousePos();
+        if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
+        {
+            PortraitMode.canDoAnything = false;
+            draggOffset = transform.position - GetMousePos();
+        }
     }
 
             // Drop de L'objet
     public void OnMouseUp()
     {
-        if(goodPosition == false)
+        if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
         {
-            transform.position = initialPos;
-        }
-        else
-        {
-            transform.position = goodPos.transform.position;
-            movable = false;
-            CheckInteraction();
-            //unlockedObj.open = true;
-                      
+            if (goodPosition == false)
+            {
+                transform.position = initialPos;
+            }
+            else
+            {
+                transform.position = goodPos.transform.position;
+                movable = false;
+                CheckInteraction();
+                //unlockedObj.open = true;
+
+            }
+
+            PortraitMode.canDoAnything = true;
         }
     }
 
             // Drag de L'objet
     public void OnMouseDrag()
-    {    
-        if(movable == true)
-        transform.position = Vector3.MoveTowards(transform.position, GetMousePos() + draggOffset, 10);        
+    {
+        if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
+        {
+            if (movable == true)
+                transform.position = Vector3.MoveTowards(transform.position, GetMousePos() + draggOffset, 10);
+        }        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

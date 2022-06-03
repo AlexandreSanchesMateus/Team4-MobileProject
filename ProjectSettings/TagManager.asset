@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Draggable
-  - GoodPosition
-  - Cascade
+  - TrapTrigger
+  - Platform
+  - Interactible
   layers:
   - Default
   - TransparentFX
@@ -14,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Layer1
-  - Layer2
+  - 
+  - 
   - 
   - 
   - 
