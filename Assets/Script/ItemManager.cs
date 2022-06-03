@@ -9,10 +9,9 @@ public class ItemManager : MonoBehaviour
 
     private Animator _animator;
 
-    public List<item> playerItems { get; private set; }
+    public List<Item> playerItems { get; private set; }
     [SerializeField] private float spacer = 50f;
-    [SerializeField] private List<item>itemList = new List<item>();
-    
+    [SerializeField] private List<Item> itemList = new List<Item>();    
     
 
     private void Start()
@@ -20,8 +19,9 @@ public class ItemManager : MonoBehaviour
         _animator = gameObject.GetComponent<Animator>();
 
         Instance = this;
-        playerItems = new List<item>();
+        playerItems = new List<Item>();
         AddItem("blue");
+        AddItem("red");
     }
 
     private void Update()
@@ -38,18 +38,18 @@ public class ItemManager : MonoBehaviour
 
     public void AddItem(string name)
     {
-        foreach (item thisItem in itemList)
+        foreach (Item thisItem in itemList)
         {
             if (thisItem.m_name == name)
             {
-                item newItem = (new item(thisItem));
+                Item newItem = (new Item(thisItem));
                 playerItems.Add(newItem);
                 AddItemToViewport(newItem);
             }
         }
     }
     
-    public void RemoveItem(item itemToRemove)
+    public void RemoveItem(Item itemToRemove)
     {
         int thisIndex = itemToRemove.m_Index;
         Destroy(itemToRemove.m_GameObject);
@@ -61,21 +61,14 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void EnableItemManager()
+    public void EnableItemManager(bool active)
     {
-        Debug.Log("ItemActive");
-        // _animator.SetBool(0, true);
-    }
-
-    public void DisableItemManager()
-    {
-        Debug.Log("ItemDesactive");
-        // _animator.SetBool(0, false);
+        _animator.SetBool("Active", active);
     }
 
     public bool IsItemInInventory(string _name)
     {
-        foreach (item other in playerItems)
+        foreach (Item other in playerItems)
         {
             if(other.m_name == _name)
                 return true;
@@ -83,11 +76,11 @@ public class ItemManager : MonoBehaviour
         return false;
     }
 
-    private void AddItemToViewport(item itemToAdd)
+    private void AddItemToViewport(Item itemToAdd)
     {
         GameObject thisImage = new GameObject();
         thisImage.transform.parent = transform;
-        thisImage.AddComponent<RectTransform>().localScale = new Vector3(2,2);
+        thisImage.AddComponent<RectTransform>().localScale = new Vector3(5,5);
         thisImage.AddComponent<CanvasRenderer>();
         thisImage.AddComponent<Image>().sprite = itemToAdd.m_Sprite;
         itemToAdd.m_GameObject = thisImage;
