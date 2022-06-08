@@ -14,6 +14,7 @@ public class PortraitMode : MonoBehaviour
     public static Item _selectedItem = null;
 
     public float radius;
+    private bool spritechange = false;
 
     [SerializeField] private GameObject _targerCam;
     [SerializeField] private float _sensitivity = 2;
@@ -78,16 +79,24 @@ public class PortraitMode : MonoBehaviour
 
                         if (currentPressedItem != null)
                         {
+
                             if (currentPressedItem != _selectedItem)
                             {
+                                if (spritechange)
+                                    _selectedItem.m_GameObject.GetComponent<Image>().sprite = _selectedItem.m_Sprite;
+
                                 _selectedItem = currentPressedItem;
                                 Debug.Log("Couleur " + _selectedItem.m_name + " est selectionné");
+                                _selectedItem.m_GameObject.GetComponent<Image>().sprite = _selectedItem.m_ActiveSprite;
+                                spritechange = true;
                             }
                             else
                             {
+                                _selectedItem.m_GameObject.GetComponent<Image>().sprite = _selectedItem.m_Sprite;
                                 _selectedItem = null;
                                 _lastPosition = Camera.main.ScreenToWorldPoint(_touch.position);
                                 Debug.Log("Couleur " + currentPressedItem.m_name + " est désactiver");
+                                spritechange = false;
                             }
                         }
                         //else if (Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(_touch.position), 0.2f).gameObject.CompareTag("Interactible"))
