@@ -9,8 +9,10 @@ public class Item
     {
         this.m_name = originalItem.m_name;
         this.m_Sprite = originalItem.m_Sprite;
+        this.m_ActiveSprite = originalItem.m_ActiveSprite;
     }
 
+    public Sprite m_ActiveSprite;
     public string m_name;
     public Sprite m_Sprite;
     [HideInInspector] public GameObject m_GameObject;
