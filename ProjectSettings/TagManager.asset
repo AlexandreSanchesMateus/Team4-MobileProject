@@ -7,6 +7,11 @@ TagManager:
   - TrapTrigger
   - Platform
   - Interactible
+  - Draggable
+  - GoodPosition
+  - GoodPosition2
+  - GoodPosition3
+  - Draggable2
   layers:
   - Default
   - TransparentFX
