@@ -8,7 +8,7 @@ public class GyroManager : MonoBehaviour
 {
     public static GyroManager Instance { get; set; }
 
-    private bool isGyroEnable = false;
+    public bool isGyroEnable = false;
     public bool _portrait;
     private bool _last;
     private bool isReorienting;
