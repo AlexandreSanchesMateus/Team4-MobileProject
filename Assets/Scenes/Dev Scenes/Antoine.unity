@@ -1207,6 +1207,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seconndpart: {fileID: 689795745}
+--- !u!1 &1519051983 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 542473332640198939, guid: b5c540a154ba7e44f88d5faf9605a4a8, type: 3}
+  m_PrefabInstance: {fileID: 542473332956460359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1760934265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,6 +1370,7 @@ GameObject:
   - component: {fileID: 1899455496}
   - component: {fileID: 1899455495}
   - component: {fileID: 1899455494}
+  - component: {fileID: 1899455497}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1438,6 +1444,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1899455497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899455493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e6ebd3a83c19043bdfedcbc329f63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGyroEnable: 0
+  _portrait: 0
+  _sizeCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _portraitSize: 0
+  _portraitRotation: 0
+  _landscapeSize: 0
+  _landscapeRotation: 0
 --- !u!1001 &542473332956460359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1502,6 +1538,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6464113582358672508, guid: 620ee272642056846bdf83915e911f4b, type: 3}
+      propertyPath: goodPos
+      value: 
+      objectReference: {fileID: 1519051983}
     - target: {fileID: 6464113582358672508, guid: 620ee272642056846bdf83915e911f4b, type: 3}
       propertyPath: unlockedObj
       value: 
