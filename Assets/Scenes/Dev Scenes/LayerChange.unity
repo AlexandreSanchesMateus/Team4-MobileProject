@@ -288,19 +288,7 @@ MonoBehaviour:
     m_zones:
     - topLeftCorner: {x: -0.5, y: 4}
       bottomRightCorner: {x: 0.5, y: 0}
-      security: 0.76
-    m_startScale: {x: 0, y: 0}
-  - ground: {fileID: 78011075}
-    m_zones:
-    - topLeftCorner: {x: -5.53, y: 7.3}
-      bottomRightCorner: {x: -3.87, y: 3.8}
-      security: 0.7
-    - topLeftCorner: {x: 2.03, y: 7.46}
-      bottomRightCorner: {x: 5, y: 3.87}
-      security: 0.71
-    m_startScale: {x: 0, y: 0}
-  - ground: {fileID: 626490375}
-    m_zones: []
+      security: 1
     m_startScale: {x: 0, y: 0}
 --- !u!1 &542025807
 GameObject:

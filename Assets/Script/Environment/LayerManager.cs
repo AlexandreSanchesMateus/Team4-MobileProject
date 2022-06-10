@@ -30,12 +30,15 @@ public class LayerManager : MonoBehaviour
 
     private void Update()
     {
+        if (layers.Count == 0)
+            return;
+
         Vector2 playerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Player position !!!!
 
         if (_inZone == null)
         {
-            if (layerID == 0)
+           if (layerID == 0)
                 _inZone = CollideWithLayerZones(layers[layerID].m_zones, playerPosition, 1);
             else if (layerID == layers.Count - 1)
                 _inZone = CollideWithLayerZones(layers[layerID - 1].m_zones, playerPosition, layerID - 1);
