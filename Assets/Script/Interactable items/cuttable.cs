@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cuttable : Interactable
+public class cuttable : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D collider;
@@ -12,7 +12,7 @@ public class cuttable : Interactable
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public override void Interact()
+    public void CutRope()
     {
         spriteRenderer.color = Color.red;
     }

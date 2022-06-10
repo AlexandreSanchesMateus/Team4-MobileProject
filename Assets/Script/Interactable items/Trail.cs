@@ -19,9 +19,9 @@ public class Trail : MonoBehaviour
         {
             foreach (RaycastHit2D rc in hits)
             {
-                if (rc.transform.GetComponent<Interactable>())
+                if (rc.transform.GetComponent<cuttable>())
                 {
-                    rc.transform.GetComponent<Interactable>().Interact();
+                    rc.transform.GetComponent<cuttable>().CutRope();
                     Debug.Log("interacted");
                     return;
                 }
