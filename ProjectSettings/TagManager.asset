@@ -12,6 +12,7 @@ TagManager:
   - GoodPosition2
   - GoodPosition3
   - Draggable2
+  - Cuttable
   layers:
   - Default
   - TransparentFX
