@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class LayerManager : MonoBehaviour
 {
-    private int layerID = 0;
-    private int layerIDtoGo = 0;
+    private int layerOn = 0;
+    private int layerGoing = 0;
     private Zone _inZone = null;
-    private bool securityZone = false;
+    private bool initSecurityZone = false;
     [SerializeField] private int _startLayer = 0;
     [SerializeField] private float changeScale = 10f;
     [SerializeField] private List<Layer> layers = new List<Layer>();
@@ -15,9 +15,15 @@ public class LayerManager : MonoBehaviour
 
     private void Start()
     {
-        foreach(Layer other in layers)
+        for(int i = 0; i < layers.Count; i++)
         {
-            other.m_startScale = other.ground.transform.localScale;
+            layers[i].m_startScale = layers[i].ground.transform.localScale;
+            layers[i]._id = i;
+
+            foreach(Zone zone in layers[i].m_zones)
+            {
+                zone.m_layer = layers[i];
+            }
         }
 
         if(_startLayer == 0 && layers.Count > 1)
@@ -33,21 +39,21 @@ public class LayerManager : MonoBehaviour
         if (layers.Count == 0)
             return;
 
-        Vector2 playerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // Player position !!!!
+        // Vector2 playerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 playerPosition = PlayerMovement2.Instance._groundPos.position;
 
         if (_inZone == null)
         {
-           if (layerID == 0)
-                _inZone = CollideWithLayerZones(layers[layerID].m_zones, playerPosition, 1);
-            else if (layerID == layers.Count - 1)
-                _inZone = CollideWithLayerZones(layers[layerID - 1].m_zones, playerPosition, layerID - 1);
+           if (layerOn == 0)
+                _inZone = CollideWithLayerZones(layers[layerOn].m_zones, playerPosition, 1);
+            else if (layerOn == layers.Count - 1)
+                _inZone = CollideWithLayerZones(layers[layerOn - 1].m_zones, playerPosition, layerOn - 1);
             else
             {
-                _inZone = CollideWithLayerZones(layers[layerID].m_zones, playerPosition, layerID + 1);
+                _inZone = CollideWithLayerZones(layers[layerOn].m_zones, playerPosition, layerOn + 1);
 
                 if (_inZone == null)
-                    _inZone = CollideWithLayerZones(layers[layerID - 1].m_zones, playerPosition, layerID - 1);
+                    _inZone = CollideWithLayerZones(layers[layerOn - 1].m_zones, playerPosition, layerOn - 1);
             }
 
             // Changer le parallaxe
@@ -55,35 +61,77 @@ public class LayerManager : MonoBehaviour
         }
         else
         {
-            securityZone = _inZone.CollideWithSecurityZone(playerPosition);
+            Debug.Log("Stay");
+
+            layers[layerGoing].ground.gameObject.GetComponent<Collider2D>().enabled = false;
 
             if (_inZone.CollideWithZone(playerPosition))
             {
                 float _stairPosition = (playerPosition.y - _inZone.bottomRightCorner.y) / (_inZone.topLeftCorner.y - _inZone.bottomRightCorner.y);
 
-                float xScaleIn = layers[layerID].m_startScale.x + changeScale;
-                float xScaleOut = layers[layerIDtoGo].m_startScale.x - changeScale;
+                float xScaleIn = layers[layerOn].m_startScale.x + changeScale;
+                float xScaleOut = layers[layerGoing].m_startScale.x - changeScale;
 
-                // Agrandir
-                layers[layerID].ground.transform.localScale = Vector2.Lerp(layers[layerID].m_startScale, new Vector2(xScaleIn, (xScaleIn * layers[layerID].m_startScale.y) / layers[layerID].m_startScale.x), _stairPosition);
-                // Reduire
-                layers[layerIDtoGo].ground.transform.localScale = Vector2.Lerp(new Vector2(xScaleOut, (xScaleOut * layers[layerIDtoGo].m_startScale.y) / layers[layerIDtoGo].m_startScale.x), layers[layerID].m_startScale, _stairPosition);
-                
-                // doit changer le scale avec l'encre + tout ce derrière
+                /*if (layerOn < layerGoing)
+                {*/
+                    // Agrandir
+                    layers[layerOn].ground.transform.localScale = Vector2.Lerp(layers[layerOn].m_startScale, new Vector2(xScaleIn, (xScaleIn * layers[layerOn].m_startScale.y) / layers[layerOn].m_startScale.x), _stairPosition);
+                    // Reduire
+                    layers[layerGoing].ground.transform.localScale = Vector2.Lerp(new Vector2(xScaleOut, (xScaleOut * layers[layerGoing].m_startScale.y) / layers[layerGoing].m_startScale.x), layers[layerOn].m_startScale, _stairPosition);
+                //}
 
-                Debug.Log("Stay");
+                PlayerMovement2.Instance.usingLayerChanger = true;
+                PlayerMovement2.Instance._rb.gravityScale = 0f;
+
+                if (PlayerMovement2.Instance.canJump)
+                {
+                    PlayerMovement2.Instance._rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+                    PlayerMovement2.Instance._rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                    if (_inZone.m_layer._id != layerOn)
+                        layerOn = layerGoing;
+                }
+                else
+                {
+                    PlayerMovement2.Instance._rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+                }
+            }
+            else if (_inZone.CollideWithSecurityZone(playerPosition))
+            {
+                Debug.Log("Security");
+
+                if (!initSecurityZone)
+                {
+                    Debug.Log("INIT");
+
+                    PlayerMovement2.Instance.usingLayerChanger = true;
+                    PlayerMovement2.Instance._rb.gravityScale = 0f;
+
+                    initSecurityZone = true;
+                }
             }
             else
             {
                 Debug.Log("Exit");
 
-                if (securityZone)
+                if (initSecurityZone)
                 {
-                    layerID = layerIDtoGo;
-                    securityZone = false;
+                    initSecurityZone = false;
+
+                    /*if (_inZone.m_layer._id != layerOn)
+                    {
+                        layerOn = layerGoing;
+                        Debug.Log("BITE");
+                    }*/
                 }
 
+                layers[layerGoing].ground.gameObject.GetComponent<Collider2D>().enabled = true;
                 _inZone = null;
+
+                PlayerMovement2.Instance._rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+                PlayerMovement2.Instance._rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                PlayerMovement2.Instance._rb.gravityScale = 1f;
+                PlayerMovement2.Instance.usingLayerChanger = false;
             }
         }
     }
@@ -92,7 +140,7 @@ public class LayerManager : MonoBehaviour
     {
         float xScale;
 
-        if (id > layerID)
+        if (id > layerOn)
             xScale = layers[id].m_startScale.x - changeScale;
         else
             xScale = layers[id].m_startScale.x + changeScale;
@@ -107,7 +155,7 @@ public class LayerManager : MonoBehaviour
             if (other.CollideWithZone(position) || other.CollideWithSecurityZone(position))
             {
                 Debug.Log("Enter");
-                layerIDtoGo = _changeLayerId;
+                layerGoing = _changeLayerId;
                 return other;
             }
         }

@@ -11,14 +11,14 @@ public class PlayerMovement2 : MonoBehaviour
     private Coroutine _coroutine;
 
     public Rigidbody2D _rb;
-    private bool canJump = false;
     private bool jump = false;
 
     [Header("Jump Settings")]
-    [SerializeField] private Transform _groundPos;
+    public Transform _groundPos;
     [SerializeField] private float _checkRadius;
     [SerializeField] private float _jumpForce;
     [SerializeField] private LayerMask _checkLayer;
+    public bool canJump = false;
     
 
     [Header("Movement Settings")]
@@ -121,21 +121,17 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!usingLayerChanger)
+        if (direction.magnitude > 0.1f)
         {
-            if (direction.magnitude > 0.1f)
-                _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
-
-            if (jump)
-            {
-                _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
-                jump = false;
-            }
+            _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
+            if (usingLayerChanger)
+                _rb.AddForce(new Vector2(0f, (direction.y / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
         }
-        else
+
+        if (jump)
         {
-            if (direction.magnitude > 0.1f)
-                _rb.AddForce(new Vector2( 0f, (direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
+            _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
+            jump = false;
         }
     }
 
