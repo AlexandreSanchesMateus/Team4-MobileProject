@@ -9,6 +9,7 @@ public class PlayerScriptTest : MonoBehaviour
 
     // A rajouter !
     public bool onLadder;
+    public bool layerCheck;
 
     public float speed = 7f;
     public float initSpeed;
@@ -19,7 +20,7 @@ public class PlayerScriptTest : MonoBehaviour
 
     private Vector3 vecRef = Vector3.zero;
     [Range(0f, 0.3f)] [SerializeField] private float smooth = 0.1f;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
@@ -37,20 +38,25 @@ public class PlayerScriptTest : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
     }
     void FixedUpdate()
-    {       
+    {
         // A rajouter !
-
-        if(onLadder == true)
+        Movement(horizontal * speed * Time.fixedDeltaTime);
+        if (onLadder == true)
         {
         GrindLadder(vertical * speedLad * Time.fixedDeltaTime);
-        rb.constraints = RigidbodyConstraints2D.FreezePositionX;
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
+            if (layerCheck)
+                rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+             
 
+            else 
+                rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+           
         }
 
         else
         {
-        Movement(horizontal * speed * Time.fixedDeltaTime);
+        
         rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
            gameObject.GetComponent<Rigidbody2D>().gravityScale = 1f;
@@ -60,7 +66,7 @@ public class PlayerScriptTest : MonoBehaviour
     }
     void Movement(float velocity)
     {
-        if (rb.gravityScale != 0f)
+        if (rb.gravityScale != 100f)
         {
             Vector3 Move = new Vector2(velocity * 10f, rb.velocity.y);
             rb.velocity = Vector3.SmoothDamp(rb.velocity, Move, ref vecRef, smooth);
@@ -77,4 +83,18 @@ public class PlayerScriptTest : MonoBehaviour
 
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("LayerCheck"))
+            layerCheck = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("LayerCheck"))
+            layerCheck = false;
+    }
+
+
 }
