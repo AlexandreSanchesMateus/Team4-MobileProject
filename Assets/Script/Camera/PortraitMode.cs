@@ -8,6 +8,8 @@ public class PortraitMode : MonoBehaviour
 {
     public static bool canDoAnything = true;
     public bool portraitModeEnable = false;
+    public GameObject trailObj;
+    private Trail trail;
 
     private Vector2 _lastPosition;
     private CinemachineVirtualCamera vitualCamera;
@@ -27,6 +29,7 @@ public class PortraitMode : MonoBehaviour
     private void Start()
     {
         vitualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
+        trail = trailObj.GetComponent<Trail>();
     }
 
     private void Update()
@@ -111,6 +114,13 @@ public class PortraitMode : MonoBehaviour
                     {
                         if (_selectedItem == null)
                             CameraMovement(Camera.main.ScreenToWorldPoint(_touch.position));
+                        else if (_selectedItem.m_name == "grey")
+                        {
+                            trailObj.transform.position = Camera.main.ScreenToWorldPoint(_touch.position);
+                            trail.CheckInteraction();
+                            Debug.Log("trailmoved");
+                        }
+
                     }
                 }
             }
