@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Layer
 {
-    public Collider2D ground;
+    [HideInInspector] public int _id;
+    public GameObject ground;
     public List<Zone> m_zones = new List<Zone>();
+    public Vector2 m_startScale;
 }

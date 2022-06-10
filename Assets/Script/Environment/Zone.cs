@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Zone
 {
+    [HideInInspector] public Layer m_layer;
     public Vector2 topLeftCorner;
     public Vector2 bottomRightCorner;
     public float security;
