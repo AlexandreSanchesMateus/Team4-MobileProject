@@ -12,7 +12,7 @@ TagManager:
   - GoodPosition2
   - GoodPosition3
   - Draggable2
-  - Cuttable
+  - Torch
   layers:
   - Default
   - TransparentFX

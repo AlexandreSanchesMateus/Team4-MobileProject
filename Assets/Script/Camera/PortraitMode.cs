@@ -118,9 +118,22 @@ public class PortraitMode : MonoBehaviour
                         {
                             trailObj.transform.position = Camera.main.ScreenToWorldPoint(_touch.position);
                             trail.CheckInteraction();
-                            Debug.Log("trailmoved");
                         }
-
+                    }
+                    else if (_touch.phase == TouchPhase.Ended)
+                    {
+                        if (_selectedItem != null && _selectedItem.m_name == "red")
+                        {
+                            Debug.Log("bonjour");
+                            Collider2D[] hitInfo = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(_touch.position), 1f);
+                            foreach (Collider2D collider in hitInfo)
+                            {
+                                if (collider.gameObject.CompareTag("Torch"))
+                                {
+                                    collider.gameObject.GetComponent<Torch>().AskToLight();
+                                }
+                            }
+                        }
                     }
                 }
             }
