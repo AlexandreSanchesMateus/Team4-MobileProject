@@ -7,7 +7,7 @@ public class LayerManager : MonoBehaviour
     private int layerID = 0;
     private int layerIDtoGo = 0;
     private Zone _inZone = null;
-    private bool securityZone = false;
+    private bool initSecurityZone = false;
     [SerializeField] private int _startLayer = 0;
     [SerializeField] private float changeScale = 10f;
     [SerializeField] private List<Layer> layers = new List<Layer>();
@@ -55,8 +55,6 @@ public class LayerManager : MonoBehaviour
         }
         else
         {
-            securityZone = _inZone.CollideWithSecurityZone(playerPosition);
-
             if (_inZone.CollideWithZone(playerPosition))
             {
                 float _stairPosition = (playerPosition.y - _inZone.bottomRightCorner.y) / (_inZone.topLeftCorner.y - _inZone.bottomRightCorner.y);
@@ -73,17 +71,28 @@ public class LayerManager : MonoBehaviour
 
                 Debug.Log("Stay");
             }
+            else if (_inZone.CollideWithSecurityZone(playerPosition))
+            {
+                if (!initSecurityZone)
+                {
+                    // Rigidbody
+                    // mouvement verticaux
+                    // mouvement horizontaux
+                    Debug.Log("INIT");
+                    initSecurityZone = true;
+                }
+
+                Debug.Log("Security");
+            }
             else
             {
                 Debug.Log("Exit");
-
-                if (securityZone)
-                {
-                    layerID = layerIDtoGo;
-                    securityZone = false;
-                }
-
+                initSecurityZone = false;
                 _inZone = null;
+
+                // Rigidbody
+                // mouvement verticaux
+                // mouvement horizontaux
             }
         }
     }
