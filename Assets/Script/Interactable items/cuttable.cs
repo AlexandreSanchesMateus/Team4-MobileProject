@@ -5,7 +5,6 @@ using UnityEngine;
 public class cuttable : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    private BoxCollider2D collider;
 
     private void Start()
     {

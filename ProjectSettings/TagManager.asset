@@ -12,10 +12,7 @@ TagManager:
   - GoodPosition2
   - GoodPosition3
   - Draggable2
-  - Cuttable
-  - Layer 0
-  - Layer 1
-  - Layer 2
+  - Torch
   layers:
   - Default
   - TransparentFX
@@ -23,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
+  - 
   - 
   - 
   - 
