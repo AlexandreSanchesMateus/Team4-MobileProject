@@ -11,6 +11,7 @@ public class PlayerMovement2 : MonoBehaviour
     private Coroutine _coroutine;
 
     public Rigidbody2D _rb;
+    public int playerLayer = -1;
     private bool jump = false;
 
     [Header("Jump Settings")]
@@ -51,12 +52,12 @@ public class PlayerMovement2 : MonoBehaviour
         if (!playerMovementEnable)
             return;
 
-        Collider2D[] _info = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
+        Collider2D _info = Physics2D.OverlapCircle(_groundPos.position, _checkRadius, _checkLayer);
         canJump = false;
-        foreach (Collider2D other in _info)
+        if(_info != null)
         {
-            if (other.gameObject.CompareTag("Platform"))
-                canJump = true;
+            canJump = true;
+            playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
         }
 
         foreach(Touch _touch in Input.touches)
