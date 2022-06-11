@@ -3,29 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Openable : Interactable
+public class Openable : MonoBehaviour
 {
     public Sprite open;
     public Sprite closed;
 
+    public GameObject flamme;
+    public GameObject neige;
+
     private SpriteRenderer sr;
     public bool isOpen;
+   
 
-    public override void Interact()
+    private void OnMouseDown()
     {
-        Debug.Log("Ouvres-toi");
-        if (isOpen)
-            sr.sprite = closed;
-        else
-            sr.sprite = open;
+        if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
+        {
+            Debug.Log("Change sprite");
 
-        isOpen = !isOpen;
+            if (!isOpen)
+            {
+                flamme.gameObject.SetActive(true);
+                neige.gameObject.SetActive(false);
+            }
+
+            
+
+        } 
+
+
     }
+
 
     private void Start()
     {
 
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = closed;
+        
+        //sr.sprite = closed;
     }
+
+   
 }
