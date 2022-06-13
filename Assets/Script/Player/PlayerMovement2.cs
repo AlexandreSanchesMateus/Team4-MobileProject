@@ -10,15 +10,16 @@ public class PlayerMovement2 : MonoBehaviour
     private int _movementFingerID = -1;
     private Coroutine _coroutine;
 
-    private Rigidbody2D _rb;
-    private bool canJump = false;
+    public Rigidbody2D _rb;
+    public int playerLayer = -1;
     private bool jump = false;
 
     [Header("Jump Settings")]
-    [SerializeField] private Transform _groundPos;
+    public Transform _groundPos;
     [SerializeField] private float _checkRadius;
     [SerializeField] private float _jumpForce;
     [SerializeField] private LayerMask _checkLayer;
+    public bool canJump = false;
     
 
     [Header("Movement Settings")]
@@ -36,6 +37,8 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private float _interactionRadius;
     [SerializeField] private LayerMask _interactionLayer;
 
+    [Header("Sound")]
+    public AudioClip bruitDePas;
 
     private void Start()
     {
@@ -51,12 +54,12 @@ public class PlayerMovement2 : MonoBehaviour
         if (!playerMovementEnable)
             return;
 
-        Collider2D[] _info = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
+        Collider2D _info = Physics2D.OverlapCircle(_groundPos.position, _checkRadius, _checkLayer);
         canJump = false;
-        foreach (Collider2D other in _info)
+        if(_info != null)
         {
-            if (other.gameObject.CompareTag("Platform"))
-                canJump = true;
+            canJump = true;
+            //playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
         }
 
         foreach(Touch _touch in Input.touches)
@@ -121,21 +124,17 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!usingLayerChanger)
+        if (direction.magnitude > 0.1f)
         {
-            if (direction.magnitude > 0.1f)
-                _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
-
-            if (jump)
-            {
-                _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
-                jump = false;
-            }
+            _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
+            if (usingLayerChanger)
+                _rb.AddForce(new Vector2(0f, (direction.y / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
         }
-        else
+
+        if (jump)
         {
-            if (direction.magnitude > 0.1f)
-                _rb.AddForce(new Vector2( 0f, (direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
+            _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
+            jump = false;
         }
     }
 
@@ -153,6 +152,7 @@ public class PlayerMovement2 : MonoBehaviour
             if (other.gameObject.CompareTag("Interactible"))
             {
                 Debug.Log("INTERACTION");
+                other.gameObject.GetComponent<Elevator>().Interact();
                 return;
             }
         }

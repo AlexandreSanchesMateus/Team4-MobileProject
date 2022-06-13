@@ -12,6 +12,7 @@ public class DraggableObj : MonoBehaviour
 
     // GameObject
     public GameObject goodPos;
+    public PlayerMovement2 player;
 
     // Vector3
     private Vector3 draggOffset;
@@ -21,9 +22,11 @@ public class DraggableObj : MonoBehaviour
     public bool goodPosition;
     private bool movable = true;
 
+    private AudioSource chting;
     public void Start()
     {
         initialPos = transform.position;
+        chting = gameObject.GetComponent<AudioSource>();
     }
 
     
@@ -44,12 +47,15 @@ public class DraggableObj : MonoBehaviour
             if (goodPosition == false)
             {
                 transform.position = initialPos;
+                
             }
             else
             {
                 transform.position = goodPos.transform.position;
                 movable = false;
+                chting.Play();
                 CheckInteraction();
+                Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
                 //unlockedObj.open = true;
 
             }
@@ -61,8 +67,10 @@ public class DraggableObj : MonoBehaviour
             // Drag de L'objet
     public void OnMouseDrag()
     {
+        
         if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
         {
+            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>());
             if (movable == true)
                 transform.position = Vector3.MoveTowards(transform.position, GetMousePos() + draggOffset, 10);
         }        

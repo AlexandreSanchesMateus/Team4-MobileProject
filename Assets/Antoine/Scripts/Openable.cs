@@ -3,29 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Openable : Interactable
+public class Openable : MonoBehaviour
 {
     public Sprite open;
     public Sprite closed;
 
+    public GameObject flamme;
+    public GameObject neige;
+
     private SpriteRenderer sr;
     public bool isOpen;
 
-    public override void Interact()
-    {
-        Debug.Log("Ouvres-toi");
-        if (isOpen)
-            sr.sprite = closed;
-        else
-            sr.sprite = open;
-
-        isOpen = !isOpen;
-    }
+    private AudioSource allume;
+    public AudioSource constant;
 
     private void Start()
     {
-
+        allume = gameObject.GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = closed;
+
+        //sr.sprite = closed;
     }
+
+    private void OnMouseDown()
+    {
+        if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
+        {
+            Debug.Log("Change sprite");
+
+            if (!isOpen)
+            {
+                flamme.gameObject.SetActive(true);
+                neige.gameObject.SetActive(false);
+                allume.Play();
+                StartCoroutine("fire");
+            }
+
+            
+
+        } 
+
+
+    }
+
+    private IEnumerator fire()
+    {
+        yield return new WaitForSeconds(1f);
+        constant.Play();
+    }
+
+
+
 }

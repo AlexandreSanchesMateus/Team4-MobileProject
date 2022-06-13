@@ -1506,8 +1506,8 @@ MonoBehaviour:
   layers:
   - ground: {fileID: 0}
     m_zones:
-    - topLeftCorner: {x: -14.26, y: 7.1}
-      bottomRightCorner: {x: -11.16, y: 0.9}
+    - topLeftCorner: {x: -13.6, y: 7.1}
+      bottomRightCorner: {x: -11.01, y: 0.9}
       security: 3.1
     - topLeftCorner: {x: -7.05, y: 7.1}
       bottomRightCorner: {x: -0.9, y: 0.9}
@@ -1765,7 +1765,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.451613, y: 1}
+    m_SensorSize: {x: 1.7431741, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

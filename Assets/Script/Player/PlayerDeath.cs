@@ -4,14 +4,35 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    public GameObject respawn;
+    private AudioSource splash;
+    /* private void OnTriggerEnter2D(Collider2D collision)
+     {
+         if (collision.gameObject.CompareTag("TrapTrigger"))
+             StartCoroutine("Respawn");
+     }*/
+
+    private void Start()
     {
-        if (collision.gameObject.CompareTag("TrapTrigger"))
+        splash = gameObject.GetComponent<AudioSource>();
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Cascade"))
+        {
             StartCoroutine("Respawn");
+            Debug.Log("Respawn");
+            splash.Play();
+        }
+            
     }
 
     IEnumerator Respawn()
     {
+        
         yield return new WaitForSeconds(1);
+        
+        transform.position = respawn.transform.position;
     }
 }
