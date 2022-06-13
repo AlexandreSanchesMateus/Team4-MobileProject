@@ -98,7 +98,6 @@ GameObject:
   - component: {fileID: 3534951512150124051}
   - component: {fileID: 3534951512150124054}
   - component: {fileID: 3534951512150124049}
-  - component: {fileID: 5536344247707262418}
   m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -246,6 +245,7 @@ MonoBehaviour:
   _interactionLayer:
     serializedVersion: 2
     m_Bits: 1
+  bruitDePas: {fileID: 0}
 --- !u!114 &3534951512150124049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,25 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: {fileID: 0}
---- !u!114 &5536344247707262418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3534951512150124044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d78e63a7726aaee49af7dd60269e62fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactableIcon: {fileID: 0}
-  inLayer1: 0
-  inLayer2: 0
-  inLayer3: 0
-  inLayer4: 0
-  inLayer5: 0
-  inLayer6: 0
 --- !u!1 &3534951512509428644
 GameObject:
   m_ObjectHideFlags: 0
