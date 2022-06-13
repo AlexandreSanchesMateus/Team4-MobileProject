@@ -57,7 +57,7 @@ public class PlayerMovement2 : MonoBehaviour
         if(_info != null)
         {
             canJump = true;
-            playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
+            //playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
         }
 
         foreach(Touch _touch in Input.touches)

@@ -13,6 +13,10 @@ TagManager:
   - GoodPosition3
   - Draggable2
   - Torch
+  - Cascade
+  - Layer 1
+  - Layer 2
+  - Layer 0
   layers:
   - Default
   - TransparentFX
@@ -20,7 +24,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Platefrom
   - 
   - 
   - 

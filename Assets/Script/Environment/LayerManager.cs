@@ -14,21 +14,23 @@ public class LayerManager : MonoBehaviour
     private float _stairPosition;
 
     [SerializeField] private int _startLayer = 0;
-    [SerializeField] [Range(0.01f, 10f)] private float changeScale = 0.5f;
+    [SerializeField] [Range(0.01f, 1f)] private float changeScale = 0.5f;
     [SerializeField] private List<Layer> layers = new List<Layer>();
 
 
     private void Start()
     {
-        for(int i = 0; i < layers.Count; i++)
+        for(int i = layers.Count - 1; i > 0; i--)
         {
+            Debug.Log(i);
+
             layers[i].m_startScale = layers[i].ground.transform.localScale;
+            layers[i].m_startPosition = layers[i].ground.transform.position;
+            InitLayer(i);
         }
 
-        if(_startLayer == 0 && layers.Count > 1)
-        {
-            LoadLayer(1);
-        }
+        layers[0].m_startScale = layers[0].ground.transform.localScale;
+        layers[0].m_startPosition = layers[0].ground.transform.position;
 
         // les rétrécire celon l'ordre dans les layers
     }
@@ -38,14 +40,18 @@ public class LayerManager : MonoBehaviour
         int layerOn = PlayerMovement2.Instance.playerLayer;
 
         if (layers.Count == 0 || layerOn == -1)
+        {
+            Debug.LogWarning("Liste layers null ou problème de détection du joueur");
             return;
+        }
+            
 
         // Vector2 playerPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerPosition = PlayerMovement2.Instance._groundPos.position;
 
         if (_inZone == null)
         {
-            if (layerOn == 0)
+             if (layerOn == 0)
                 _inZone = CollideWithLayerZones(layers[layerOn].m_zones, playerPosition, 1);
             else if (layerOn == layers.Count - 1)
                 _inZone = CollideWithLayerZones(layers[layerOn - 1].m_zones, playerPosition, layerOn - 1);
@@ -69,12 +75,17 @@ public class LayerManager : MonoBehaviour
                 _stairPosition = (playerPosition.y - _inZone.bottomRightCorner.y) / (_inZone.topLeftCorner.y - _inZone.bottomRightCorner.y);
 
                 float xScaleIn = layers[layerUpper].m_startScale.x + changeScale;
-                float xScaleOut = layers[layerUpper].m_startScale.x - changeScale;
+                //float xScaleOut = layers[layerUpper].m_startScale.x - changeScale;
 
                 // Agrandir
                 layers[layerLower].ground.transform.localScale = Vector2.Lerp(layers[layerLower].m_startScale, new Vector2(xScaleIn, (xScaleIn * layers[layerLower].m_startScale.y) / layers[layerLower].m_startScale.x), _stairPosition);
+
                 // Reduire
-                layers[layerUpper].ground.transform.localScale = Vector2.Lerp(new Vector2(xScaleOut, (xScaleOut * layers[layerUpper].m_startScale.y) / layers[layerUpper].m_startScale.x), layers[layerLower].m_startScale, _stairPosition);
+                //layers[layerUpper].ground.transform.localScale = layers[layerLower].ground.transform.localScale / ((xScaleIn * layers[layerLower].m_startScale.y) / layers[layerLower].m_startScale.x);
+                //layers[layerUpper].ground.transform.localScale = Vector2.Lerp(new Vector2(xScaleOut, (xScaleOut * layers[layerUpper].m_startScale.y) / layers[layerUpper].m_startScale.x), layers[layerLower].m_startScale, _stairPosition);
+                //layers[layerUpper].ground.transform.localScale = Vector2.Lerp(layers[layerLower].m_startScale, new Vector2(xScaleIn, (xScaleIn * layers[layerUpper].m_startScale.y) / layers[layerUpper].m_startScale.x), _stairPosition);
+
+                layers[layerUpper].ground.gameObject.transform.position = layers[layerUpper].m_startPosition;
 
                 if (!initSecurityZone)
                 {
@@ -102,13 +113,21 @@ public class LayerManager : MonoBehaviour
 
                 initSecurityZone = false;
 
-                if (_stairPosition > 0.8f)
+                if (_stairPosition > 0.9f)
                 {
                     layers[layerUpper].ground.gameObject.GetComponent<Collider2D>().enabled = true;
                     layers[layerLower].ground.gameObject.GetComponent<Collider2D>().enabled = false;
+
+                    layers[layerUpper].ground.transform.localScale = new Vector2(changeScale, changeScale);
+                    layers[layerLower].ground.transform.localScale = new Vector2(layers[layerLower].m_startScale.x + changeScale, ((layers[layerLower].m_startScale.x + changeScale) * layers[layerLower].m_startScale.y) / layers[layerLower].m_startScale.x);
                 }
                 else
+                {
                     layers[layerUpper].ground.gameObject.GetComponent<Collider2D>().enabled = false;
+
+                    layers[layerUpper].ground.transform.localScale = new Vector2(changeScale, changeScale);
+                    layers[layerLower].ground.transform.localScale = new Vector2(layers[layerLower].m_startScale.x + changeScale, ((layers[layerLower].m_startScale.x + changeScale) * layers[layerLower].m_startScale.y) / layers[layerLower].m_startScale.x);
+                }
 
                 _inZone = null;
 
@@ -120,7 +139,7 @@ public class LayerManager : MonoBehaviour
         }
     }
 
-    private void LoadLayer(int id)
+    private void InitLayer(int id)
     {
         float xScale;
 
@@ -128,8 +147,6 @@ public class LayerManager : MonoBehaviour
             xScale = layers[id].m_startScale.x - changeScale;
         else
             xScale = layers[id].m_startScale.x + changeScale;
-
-        // xScale = layers[id].m_startScale.x + changeScale * (id - PlayerMovement2.Instance.playerLayer);
 
         layers[id].ground.transform.localScale = new Vector2(xScale, (xScale * layers[id].m_startScale.y) / layers[id].m_startScale.x);
     }
@@ -167,11 +184,11 @@ public class LayerManager : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        foreach(Layer layerID in layers)
+        foreach (Layer layerID in layers)
         {
-            foreach(Zone other in layerID.m_zones)
+            foreach (Zone other in layerID.m_zones)
             {
-                Gizmos.color = new Vector4(0.5f,0.5f,0.5f,0.5f);
+                Gizmos.color = new Vector4(0.5f, 0.5f, 0.5f, 0.5f);
                 Gizmos.DrawCube((other.topLeftCorner + other.bottomRightCorner) / 2, new Vector3(other.bottomRightCorner.x - other.topLeftCorner.x, other.topLeftCorner.y - other.bottomRightCorner.y, 0));
             }
         }

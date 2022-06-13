@@ -8,4 +8,5 @@ public class Layer
     public GameObject ground;
     public List<Zone> m_zones = new List<Zone>();
     [HideInInspector] public Vector2 m_startScale;
+    [HideInInspector] public Vector2 m_startPosition;
 }
