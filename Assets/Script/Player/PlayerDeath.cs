@@ -6,18 +6,24 @@ public class PlayerDeath : MonoBehaviour
 {
 
     public GameObject respawn;
-   /* private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("TrapTrigger"))
-            StartCoroutine("Respawn");
-    }*/
+    private AudioSource splash;
+    /* private void OnTriggerEnter2D(Collider2D collision)
+     {
+         if (collision.gameObject.CompareTag("TrapTrigger"))
+             StartCoroutine("Respawn");
+     }*/
 
+    private void Start()
+    {
+        splash = gameObject.GetComponent<AudioSource>();
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Cascade"))
         {
             StartCoroutine("Respawn");
             Debug.Log("Respawn");
+            splash.Play();
         }
             
     }

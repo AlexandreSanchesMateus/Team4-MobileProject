@@ -37,6 +37,8 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private float _interactionRadius;
     [SerializeField] private LayerMask _interactionLayer;
 
+    [Header("Sound")]
+    public AudioClip bruitDePas;
 
     private void Start()
     {
