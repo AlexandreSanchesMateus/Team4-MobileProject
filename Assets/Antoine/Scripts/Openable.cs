@@ -13,7 +13,17 @@ public class Openable : MonoBehaviour
 
     private SpriteRenderer sr;
     public bool isOpen;
-   
+
+    private AudioSource allume;
+    public AudioSource constant;
+
+    private void Start()
+    {
+        allume = gameObject.GetComponent<AudioSource>();
+        sr = GetComponent<SpriteRenderer>();
+
+        //sr.sprite = closed;
+    }
 
     private void OnMouseDown()
     {
@@ -25,6 +35,8 @@ public class Openable : MonoBehaviour
             {
                 flamme.gameObject.SetActive(true);
                 neige.gameObject.SetActive(false);
+                allume.Play();
+                StartCoroutine("fire");
             }
 
             
@@ -34,14 +46,12 @@ public class Openable : MonoBehaviour
 
     }
 
-
-    private void Start()
+    private IEnumerator fire()
     {
-
-        sr = GetComponent<SpriteRenderer>();
-        
-        //sr.sprite = closed;
+        yield return new WaitForSeconds(1f);
+        constant.Play();
     }
 
-   
+
+
 }
