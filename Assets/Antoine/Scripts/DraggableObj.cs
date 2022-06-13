@@ -22,9 +22,11 @@ public class DraggableObj : MonoBehaviour
     public bool goodPosition;
     private bool movable = true;
 
+    private AudioSource chting;
     public void Start()
     {
         initialPos = transform.position;
+        chting = gameObject.GetComponent<AudioSource>();
     }
 
     
@@ -51,6 +53,7 @@ public class DraggableObj : MonoBehaviour
             {
                 transform.position = goodPos.transform.position;
                 movable = false;
+                chting.Play();
                 CheckInteraction();
                 Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
                 //unlockedObj.open = true;
