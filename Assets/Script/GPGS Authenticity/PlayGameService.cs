@@ -9,7 +9,7 @@ public class PlayGameService : MonoBehaviour
 {
     public void Start()
     {
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     }
 
     internal void ProcessAuthentication(SignInStatus status)
