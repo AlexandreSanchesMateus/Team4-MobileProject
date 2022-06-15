@@ -1,17 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 
 
 public class PlayGameService : MonoBehaviour
 {
-    public void Start()
-    {
-        //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-    }
-
     internal void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success)
@@ -24,5 +20,11 @@ public class PlayGameService : MonoBehaviour
             // to ask users to sign-in. Clicking it should call
             // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
         }
+    }
+    
+    public void Start()
+    {
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        PlayGamesPlatform.Activate();
     }
 }

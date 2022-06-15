@@ -24,7 +24,11 @@
 
 public static class GPGSIds
 {
-        public const string achievement_test = "CgkI1b6apO8HEAIQAg"; // <GPGSID>
+        public const string achievement_wonderful = "CgkI1b6apO8HEAIQAg"; // <GPGSID>
+        public const string achievement_traitor = "CgkI1b6apO8HEAIQBQ"; // <GPGSID>
+        public const string achievement_the_fire_is_mine = "CgkI1b6apO8HEAIQBA"; // <GPGSID>
+        public const string achievement_headache = "CgkI1b6apO8HEAIQBg"; // <GPGSID>
+        public const string achievement_a_perfect_cut = "CgkI1b6apO8HEAIQAw"; // <GPGSID>
 
 }
 
