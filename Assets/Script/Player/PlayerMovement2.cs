@@ -16,6 +16,7 @@ public class PlayerMovement2 : MonoBehaviour
     private Vector3 m_Velocity = Vector3.zero;
 
 
+
     [Header("Generale Settings")]
     [SerializeField] private Animator animator;
     public Rigidbody2D _rb;
@@ -173,6 +174,9 @@ public class PlayerMovement2 : MonoBehaviour
 
             if(direction.x > 0 && !m_FacingRight || direction.x < 0 && m_FacingRight)
                 Flip();
+
+            bruitDePas.Play();
+
         }
 
         if (jump)
