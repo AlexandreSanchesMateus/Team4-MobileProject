@@ -109,7 +109,9 @@ public class PlayerMovement2 : MonoBehaviour
 
                     if (CheckMovementVec.magnitude > _rangeMovementAccepted)
                     {
-                        StopCoroutine(_coroutine);
+                        if (_coroutine != null)
+                             StopCoroutine(_coroutine);
+
                         InitTouch(_touch);
                     }
                     Debug.DrawRay(Camera.main.ScreenToWorldPoint(_startPosition), CheckMovementVec, Color.red);
