@@ -9,6 +9,7 @@ public class PlayerMovement2 : MonoBehaviour
     private Vector2 _startPosition;
     private int _movementFingerID = -1;
     private Coroutine _coroutine;
+    private Animator animator;
 
     public Rigidbody2D _rb;
     public int playerLayer = -1;
@@ -44,6 +45,7 @@ public class PlayerMovement2 : MonoBehaviour
     {
         Instance = this;
         _rb = gameObject.GetComponent<Rigidbody2D>();
+        animator = gameObject.GetComponent<Animator>();
 
         _UIJoystickOuterCircle.SetActive(false);
         _UIJoystick.SetActive(false);
@@ -51,14 +53,39 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void Update()
     {
-        if (!playerMovementEnable)
-            return;
+        // -------------------------------------------------------- //
+        // #################### DEBUG MOVEMENT #################### //
+        // -------------------------------------------------------- //
 
-        Collider2D _info = Physics2D.OverlapCircle(_groundPos.position, _checkRadius, _checkLayer);
-        canJump = false;
-        if(_info != null)
+        // ATTENTION : DOIT ETRE RETIRER AVANT DE BUILD
+
+        if (!playerMovementEnable)
         {
-            canJump = true;
+            direction.x = Input.GetAxis("Horizontal");
+            direction.y = Input.GetAxis("Vertical");
+
+            Collider2D[] col = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
+            canJump = false;
+            foreach (Collider2D other in col)
+            {
+                if (other.gameObject.CompareTag("Platform"))
+                    canJump = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && canJump)
+            {
+                jump = true;
+            }
+
+            return;
+        }
+
+        Collider2D[] _info = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
+        canJump = false;
+        foreach(Collider2D other in _info)
+        {
+            if(other.gameObject.CompareTag("Platform"))
+                canJump = true;
             //playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
         }
 
