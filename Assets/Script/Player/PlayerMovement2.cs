@@ -9,11 +9,17 @@ public class PlayerMovement2 : MonoBehaviour
     private Vector2 _startPosition;
     private int _movementFingerID = -1;
     private Coroutine _coroutine;
-    private Animator animator;
+    private bool jump = false;
+    private bool isJumping = false;
+    
+    private bool m_FacingRight = false;
+    private Vector3 m_Velocity = Vector3.zero;
 
+
+    [Header("Generale Settings")]
+    [SerializeField] private Animator animator;
     public Rigidbody2D _rb;
     public int playerLayer = -1;
-    private bool jump = false;
 
     [Header("Jump Settings")]
     public Transform _groundPos;
@@ -22,15 +28,15 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private LayerMask _checkLayer;
     public bool canJump = false;
     
-
     [Header("Movement Settings")]
+    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;
+    [SerializeField] private float _moveSpeed;
     [SerializeField] private float _timeMovementAccepted = 1f;
     [SerializeField] private float _rangeMovementAccepted = 1f;
-    [SerializeField] private float _moveSpeed;
-    public Vector2 direction;
     public bool playerMovementEnable = true;
-    public bool usingLayerChanger = false;
-    
+    [HideInInspector] public Vector2 direction;
+    [HideInInspector] public bool usingLayerChanger = false;
+
     [Header("UI Settings")]
     [SerializeField] private GameObject _UIJoystick;
     [SerializeField] private GameObject _UIJoystickOuterCircle;
@@ -45,7 +51,6 @@ public class PlayerMovement2 : MonoBehaviour
     {
         Instance = this;
         _rb = gameObject.GetComponent<Rigidbody2D>();
-        animator = gameObject.GetComponent<Animator>();
 
         _UIJoystickOuterCircle.SetActive(false);
         _UIJoystick.SetActive(false);
@@ -64,30 +69,16 @@ public class PlayerMovement2 : MonoBehaviour
             direction.x = Input.GetAxis("Horizontal");
             direction.y = Input.GetAxis("Vertical");
 
-            Collider2D[] col = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
-            canJump = false;
-            foreach (Collider2D other in col)
-            {
-                if (other.gameObject.CompareTag("Platform"))
-                    canJump = true;
-            }
-
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
             {
                 jump = true;
+                isJumping = true;
+                animator.SetBool("Jumping", true);
             }
 
             return;
         }
-
-        Collider2D[] _info = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
-        canJump = false;
-        foreach(Collider2D other in _info)
-        {
-            if(other.gameObject.CompareTag("Platform"))
-                canJump = true;
-            //playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
-        }
+        
 
         foreach(Touch _touch in Input.touches)
         {
@@ -151,18 +142,44 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Collider2D[] _info = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
+        canJump = false;
+        foreach (Collider2D other in _info)
+        {
+            if (other.gameObject.CompareTag("Platform"))
+            {
+                canJump = true;
+                if (isJumping)
+                {
+                    isJumping = false;
+                    animator.SetBool("Jumping", false);
+                }
+            }
+            //playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
+        }
+        
+        animator.SetFloat("Velocity", direction.magnitude);
+
         if (direction.magnitude > 0.1f)
         {
-            _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
-            if (usingLayerChanger)
-                _rb.AddForce(new Vector2(0f, (direction.y / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
+            Vector3 targetVelocity = new Vector2(direction.x * _moveSpeed * Time.fixedDeltaTime, _rb.velocity.y);
+            _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+
+            // _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
+            //if (usingLayerChanger)
+            //    _rb.AddForce(new Vector2(0f, (direction.y / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
+
+            if(direction.x > 0 && !m_FacingRight || direction.x < 0 && m_FacingRight)
+                Flip();
         }
 
         if (jump)
         {
+            animator.SetBool("Jumping", true);
             _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
             jump = false;
         }
+
     }
 
     private Vector2 GetDirection(Vector2 screenPosition)
@@ -187,6 +204,8 @@ public class PlayerMovement2 : MonoBehaviour
         if (canJump)
         {
             jump = true;
+            isJumping = true;
+            animator.SetBool("Jumping", true);
             Debug.Log("JUMP");
         }
     }
@@ -205,6 +224,15 @@ public class PlayerMovement2 : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeMovementAccepted);
         InitTouch(m_touch);
+    }
+
+    private void Flip()
+    {
+        m_FacingRight = !m_FacingRight;
+
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     private void OnDrawGizmos()
