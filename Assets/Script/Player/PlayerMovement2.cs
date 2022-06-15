@@ -196,7 +196,7 @@ public class PlayerMovement2 : MonoBehaviour
             if (other.gameObject.CompareTag("Interactible"))
             {
                 Debug.Log("INTERACTION");
-                other.gameObject.GetComponent<Elevator>().Interact();
+               // other.gameObject.GetComponent<Elevator>().Interact();
                 return;
             }
         }
