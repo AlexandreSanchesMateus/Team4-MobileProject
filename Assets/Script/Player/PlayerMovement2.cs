@@ -9,11 +9,14 @@ public class PlayerMovement2 : MonoBehaviour
     private Vector2 _startPosition;
     private int _movementFingerID = -1;
     private Coroutine _coroutine;
-    private Animator animator;
+    private bool jump = false;
+    private bool isJumping = false;
 
+
+    [Header("Generale Settings")]
+    [SerializeField] private Animator animator;
     public Rigidbody2D _rb;
     public int playerLayer = -1;
-    private bool jump = false;
 
     [Header("Jump Settings")]
     public Transform _groundPos;
@@ -22,7 +25,6 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private LayerMask _checkLayer;
     public bool canJump = false;
     
-
     [Header("Movement Settings")]
     [SerializeField] private float _timeMovementAccepted = 1f;
     [SerializeField] private float _rangeMovementAccepted = 1f;
@@ -45,7 +47,6 @@ public class PlayerMovement2 : MonoBehaviour
     {
         Instance = this;
         _rb = gameObject.GetComponent<Rigidbody2D>();
-        animator = gameObject.GetComponent<Animator>();
 
         _UIJoystickOuterCircle.SetActive(false);
         _UIJoystick.SetActive(false);
@@ -69,12 +70,21 @@ public class PlayerMovement2 : MonoBehaviour
             foreach (Collider2D other in col)
             {
                 if (other.gameObject.CompareTag("Platform"))
+                {
                     canJump = true;
+                    if (isJumping)
+                    {
+                        isJumping = false;
+                        animator.SetBool("Jumping", false);
+                    }
+                } 
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
             {
                 jump = true;
+                isJumping = true;
+                animator.SetBool("Jumping", true);
             }
 
             return;
@@ -84,8 +94,15 @@ public class PlayerMovement2 : MonoBehaviour
         canJump = false;
         foreach(Collider2D other in _info)
         {
-            if(other.gameObject.CompareTag("Platform"))
+            if (other.gameObject.CompareTag("Platform"))
+            {
                 canJump = true;
+                if (isJumping)
+                {
+                    isJumping = false;
+                    animator.SetBool("Jumping", false);
+                }
+            }
             //playerLayer = (int)System.Char.GetNumericValue(_info.tag[_info.tag.Length - 1]);
         }
 
@@ -153,6 +170,7 @@ public class PlayerMovement2 : MonoBehaviour
     {
         if (direction.magnitude > 0.1f)
         {
+            animator.SetFloat("Velocity", direction.x);
             _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
             if (usingLayerChanger)
                 _rb.AddForce(new Vector2(0f, (direction.y / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime));
@@ -160,8 +178,10 @@ public class PlayerMovement2 : MonoBehaviour
 
         if (jump)
         {
+            animator.SetBool("Jumping", true);
             _rb.AddForce(new Vector2(0f, _jumpForce * Time.fixedDeltaTime));
             jump = false;
+
         }
     }
 
@@ -187,6 +207,8 @@ public class PlayerMovement2 : MonoBehaviour
         if (canJump)
         {
             jump = true;
+            isJumping = true;
+            animator.SetBool("Jumping", true);
             Debug.Log("JUMP");
         }
     }
