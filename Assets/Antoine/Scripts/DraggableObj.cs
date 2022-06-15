@@ -80,7 +80,7 @@ public class DraggableObj : MonoBehaviour
         if (collision.gameObject.CompareTag(nom))
         {           
             goodPosition = true;
-            goodPos = collision.gameObject;
+            //goodPos = collision.gameObject;
             
         }
     }
