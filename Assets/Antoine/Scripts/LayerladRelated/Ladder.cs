@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Ladder : Interactable
 {
-    public GameObject depart;
+    public float speed = 1;
+
+    public GameObject depart1;
     public GameObject depart2;
-    public GameObject layerCheck;
     
-    public PlayerScriptTest player;
+    
+    public PlayerMovement2 player;
     public PlayerIntPreset preset;
+
+    public bool elevating;
+    public bool swap;
 
     
     // A changer avec le vrai player
@@ -21,31 +26,41 @@ public class Ladder : Interactable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Frite");
-        layerCheck.SetActive(true);
+        Debug.Log("Interaction avec l'échelle");
+        PlayerMovement2.Instance.playerMovementEnable = false;
+        player._rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+        player.GetComponent<CapsuleCollider2D>().isTrigger = true;
+        player.GetComponent<Rigidbody2D>().gravityScale = 0f;
 
-        if (player.onLadder == false)
+
+        elevating = true;     
+
+        if (swap == false)
+           player.transform.position = depart1.transform.position;
+
+        else
+            player.transform.position = depart2.transform.position;
+
+         swap = !swap;
+    }
+
+    private void Update()
+    {
+        if (elevating == true)
         {
+             if(swap == true)
+              {
+            player.transform.position = player.transform.position + new Vector3(0, speed, 0);
+            GyroManager.Instance.isGyroEnable = false;
+             }
 
-            player.onLadder = true;
 
-           /* if (preset.inLayer1)
-                player.transform.position = depart.transform.position;
 
-            if (preset.inLayer2)
-                player.transform.position = depart2.transform.position;*/
+             else           
+            player.transform.position = player.transform.position - new Vector3(0, speed , 0);
 
 
         }
-
-        else
-            player.onLadder = false;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        player.onLadder = false;
-        layerCheck.SetActive(false);
     }
 
 }

@@ -7,7 +7,7 @@ public class Elevator : MonoBehaviour
     // Int / float
 
     public float speed = 1;
-    public float percent;
+    
 
     // Gameobject
     public GameObject depart1;
@@ -40,8 +40,8 @@ public class Elevator : MonoBehaviour
 
             elevating = true;
 
-            //if (swap == false)
                 playerMov.transform.position = depart1.transform.position;
+            //if (swap == false)
 
            // else
               //  playerMov.transform.position = depart2.transform.position;
