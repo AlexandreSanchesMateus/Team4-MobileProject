@@ -50,14 +50,14 @@ public class Ladder : Interactable
         {
              if(swap == true)
               {
-            player.transform.position = player.transform.position + new Vector3(0, speed, 0);
+            player.transform.position = player.transform.position - new Vector3(0, speed, 0);
             GyroManager.Instance.isGyroEnable = false;
              }
 
 
 
              else           
-            player.transform.position = player.transform.position - new Vector3(0, speed , 0);
+            player.transform.position = player.transform.position + new Vector3(0, speed , 0);
 
 
         }
