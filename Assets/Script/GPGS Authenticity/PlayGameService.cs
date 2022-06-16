@@ -27,10 +27,10 @@ public class PlayGameService : MonoBehaviour
         }
     }
     
-    public void Start()
+/*    public void Start()
     {
 
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-        PlayGamesPlatform.Activate();
-    }
+       PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+       PlayGamesPlatform.Activate();
+    }*/
 }
