@@ -16,7 +16,7 @@ public class LayerManager2 : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        confiner2D = GyroManager.Instance.gameObject.GetComponent<CinemachineConfiner2D>();
+        //confiner2D = GyroManager.Instance.gameObject.GetComponent<CinemachineConfiner2D>();
     }
 
     public void TransitionScreen(Vector2 newPosition, int layer)
@@ -28,7 +28,7 @@ public class LayerManager2 : MonoBehaviour
     {
         animator.SetBool("Active", true);
         yield return new WaitForSeconds(time);
-        confiner2D.m_BoundingShape2D = cofineCollider[layer];
+        //confiner2D.m_BoundingShape2D = cofineCollider[layer];
         PlayerMovement2.Instance.gameObject.transform.position = position;
         animator.SetBool("Active", false);
     }
