@@ -125,14 +125,12 @@ public class PortraitMode : MonoBehaviour
                         Collider2D[] hitInfo = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(_touch.position), 1f);
                         if (_selectedItem != null && _selectedItem.m_name == "red")
                         {
-                            Debug.Log("bonjour");
-                           
                             foreach (Collider2D collider in hitInfo)
                             {
                                 switch (collider.gameObject.tag)
                                 {
                                     case "Torch":
-                                        collider.gameObject.GetComponent<Torch>().AskToLight();
+                                        collider.gameObject.GetComponent<Torch>().LightTorch();
                                         break;
                                     case "Branch":
                                         collider.gameObject.GetComponent<Collider2D>().isTrigger = true;

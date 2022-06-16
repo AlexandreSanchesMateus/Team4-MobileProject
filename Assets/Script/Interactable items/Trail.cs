@@ -22,7 +22,11 @@ public class Trail : MonoBehaviour
                 if (rc.transform.GetComponent<cuttable>())
                 {
                     rc.transform.GetComponent<cuttable>().CutRope();
-                    Debug.Log("interacted");
+                    return;
+                }
+                else if (rc.transform.GetComponent<cuttable2>())
+                {
+                    rc.transform.GetComponent<cuttable2>().CutRope();
                     return;
                 }
             }
