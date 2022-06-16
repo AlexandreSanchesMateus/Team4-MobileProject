@@ -48,10 +48,10 @@ public class ItemManager : MonoBehaviour
                 playerItems.Add(newItem);
                 AddItemToViewport(newItem);
 
-                if(name == "gris" && PlayGameService.Instance.isConnectedToGoogleService)
+                /*if(name == "gris" && PlayGameService.Instance.isConnectedToGoogleService)
                     Social.ReportProgress("Cfjewijawiu_QA", 100, null);
                 else if(name == "red" && PlayGameService.Instance.isConnectedToGoogleService)
-                    Social.ReportProgress("Cfjewijawiu_QA", 100, null);
+                    Social.ReportProgress("Cfjewijawiu_QA", 100, null);*/
             }
         }
     }
