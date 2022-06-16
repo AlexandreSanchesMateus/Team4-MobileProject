@@ -35,7 +35,7 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private float _timeMovementAccepted = 1f;
     [SerializeField] private float _rangeMovementAccepted = 1f;
     public bool playerMovementEnable = true;
-    [HideInInspector] public Vector2 direction;
+    public Vector2 direction;
     [HideInInspector] public bool usingLayerChanger = false;
 
     [Header("UI Settings")]
@@ -154,6 +154,7 @@ public class PlayerMovement2 : MonoBehaviour
                 canJump = true;
                 if (isJumping)
                 {
+                    Debug.Log("Stop");
                     isJumping = false;
                     animator.SetBool("Jumping", false);
                 }
@@ -165,7 +166,13 @@ public class PlayerMovement2 : MonoBehaviour
 
         if (direction.magnitude > 0.1f)
         {
-            Vector3 targetVelocity = new Vector2(direction.x * _moveSpeed * Time.fixedDeltaTime, _rb.velocity.y);
+            int move = 0;
+            if (direction.x > 0.2f)
+                move = 1;
+            else if (direction.x < -0.2f)
+                move = -1;
+
+            Vector3 targetVelocity = new Vector2(move * _moveSpeed * Time.fixedDeltaTime, _rb.velocity.y);
             _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
             // _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
@@ -175,7 +182,7 @@ public class PlayerMovement2 : MonoBehaviour
             if(direction.x > 0 && !m_FacingRight || direction.x < 0 && m_FacingRight)
                 Flip();
 
-            bruitDePas.Play();
+            //bruitDePas.Play();
 
         }
 
@@ -210,8 +217,8 @@ public class PlayerMovement2 : MonoBehaviour
         if (canJump)
         {
             jump = true;
-            isJumping = true;
             animator.SetBool("Jumping", true);
+            Invoke("StartJump", 0.2f);
             Debug.Log("JUMP");
         }
     }
@@ -239,6 +246,11 @@ public class PlayerMovement2 : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    private void StartJump()
+    {
+        isJumping = true;
     }
 
     private void OnDrawGizmos()

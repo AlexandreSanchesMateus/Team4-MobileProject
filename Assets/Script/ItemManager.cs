@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public class ItemManager : MonoBehaviour
 {
@@ -45,6 +47,11 @@ public class ItemManager : MonoBehaviour
                 Item newItem = (new Item(thisItem));
                 playerItems.Add(newItem);
                 AddItemToViewport(newItem);
+
+                if(name == "gris" && PlayGameService.Instance.isConnectedToGoogleService)
+                    Social.ReportProgress("Cfjewijawiu_QA", 100, null);
+                else if(name == "red" && PlayGameService.Instance.isConnectedToGoogleService)
+                    Social.ReportProgress("Cfjewijawiu_QA", 100, null);
             }
         }
     }
