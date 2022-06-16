@@ -5,6 +5,7 @@ using UnityEngine;
 public class LayerTP : MonoBehaviour
 {
     private Collider2D m_collider;
+    [SerializeField] private int nextLayerID = 0;
     [SerializeField] private Transform tpPosition;
 
     private void Start()
@@ -16,7 +17,7 @@ public class LayerTP : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            LayerManager2.Instance.TransitionScreen(tpPosition.position);
+            LayerManager2.Instance.TransitionScreen(tpPosition.position, nextLayerID);
         }
     }
 }

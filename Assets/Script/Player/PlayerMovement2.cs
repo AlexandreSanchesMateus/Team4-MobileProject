@@ -16,6 +16,7 @@ public class PlayerMovement2 : MonoBehaviour
     private Vector3 m_Velocity = Vector3.zero;
 
 
+
     [Header("Generale Settings")]
     [SerializeField] private Animator animator;
     public Rigidbody2D _rb;
@@ -34,7 +35,7 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private float _timeMovementAccepted = 1f;
     [SerializeField] private float _rangeMovementAccepted = 1f;
     public bool playerMovementEnable = true;
-    [HideInInspector] public Vector2 direction;
+    public Vector2 direction;
     [HideInInspector] public bool usingLayerChanger = false;
 
     [Header("UI Settings")]
@@ -109,7 +110,9 @@ public class PlayerMovement2 : MonoBehaviour
 
                     if (CheckMovementVec.magnitude > _rangeMovementAccepted)
                     {
-                        StopCoroutine(_coroutine);
+                        if (_coroutine != null)
+                             StopCoroutine(_coroutine);
+
                         InitTouch(_touch);
                     }
                     Debug.DrawRay(Camera.main.ScreenToWorldPoint(_startPosition), CheckMovementVec, Color.red);
@@ -151,6 +154,7 @@ public class PlayerMovement2 : MonoBehaviour
                 canJump = true;
                 if (isJumping)
                 {
+                    Debug.Log("Stop");
                     isJumping = false;
                     animator.SetBool("Jumping", false);
                 }
@@ -162,7 +166,13 @@ public class PlayerMovement2 : MonoBehaviour
 
         if (direction.magnitude > 0.1f)
         {
-            Vector3 targetVelocity = new Vector2(direction.x * _moveSpeed * Time.fixedDeltaTime, _rb.velocity.y);
+            int move = 0;
+            if (direction.x > 0.2f)
+                move = 1;
+            else if (direction.x < -0.2f)
+                move = -1;
+
+            Vector3 targetVelocity = new Vector2(move * _moveSpeed * Time.fixedDeltaTime, _rb.velocity.y);
             _rb.velocity = Vector3.SmoothDamp(_rb.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
             // _rb.AddForce(new Vector2((direction.x / _maxAmplitude) * _moveSpeed * Time.fixedDeltaTime, 0f));
@@ -171,6 +181,9 @@ public class PlayerMovement2 : MonoBehaviour
 
             if(direction.x > 0 && !m_FacingRight || direction.x < 0 && m_FacingRight)
                 Flip();
+
+            //bruitDePas.Play();
+
         }
 
         if (jump)
@@ -196,7 +209,7 @@ public class PlayerMovement2 : MonoBehaviour
             if (other.gameObject.CompareTag("Interactible"))
             {
                 Debug.Log("INTERACTION");
-                other.gameObject.GetComponent<Elevator>().Interact();
+               // other.gameObject.GetComponent<Elevator>().Interact();
                 return;
             }
         }
@@ -204,8 +217,8 @@ public class PlayerMovement2 : MonoBehaviour
         if (canJump)
         {
             jump = true;
-            isJumping = true;
             animator.SetBool("Jumping", true);
+            Invoke("StartJump", 0.2f);
             Debug.Log("JUMP");
         }
     }
@@ -233,6 +246,11 @@ public class PlayerMovement2 : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    private void StartJump()
+    {
+        isJumping = true;
     }
 
     private void OnDrawGizmos()

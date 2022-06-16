@@ -18,7 +18,7 @@ public class BetterPressurePlate : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Rock"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Draggable"))
         {
             transform.position = bottomPos;
             ladder.activated = true;
@@ -27,7 +27,7 @@ public class BetterPressurePlate : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Rock"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Draggable"))
         {
             transform.position = topPos;
             ladder.activated = false;

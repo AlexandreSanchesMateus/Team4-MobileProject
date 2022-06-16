@@ -122,15 +122,34 @@ public class PortraitMode : MonoBehaviour
                     }
                     else if (_touch.phase == TouchPhase.Ended)
                     {
+                        Collider2D[] hitInfo = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(_touch.position), 1f);
                         if (_selectedItem != null && _selectedItem.m_name == "red")
                         {
                             Debug.Log("bonjour");
-                            Collider2D[] hitInfo = Physics2D.OverlapCircleAll(Camera.main.ScreenToWorldPoint(_touch.position), 1f);
+                           
                             foreach (Collider2D collider in hitInfo)
                             {
-                                if (collider.gameObject.CompareTag("Torch"))
+                                switch (collider.gameObject.tag)
                                 {
-                                    collider.gameObject.GetComponent<Torch>().AskToLight();
+                                    case "Torch":
+                                        collider.gameObject.GetComponent<Torch>().AskToLight();
+                                        break;
+                                    case "Branch":
+                                        collider.gameObject.GetComponent<Collider2D>().isTrigger = true;
+                                        break;
+                                }
+                            }
+
+                        }
+                        else if (_selectedItem == null)
+                        {
+                            foreach (Collider2D collider in hitInfo)
+                            {
+                                switch (collider.gameObject.tag)
+                                {
+                                    case "Branch":
+                                        collider.gameObject.GetComponent<Collider2D>().isTrigger = true;
+                                        break;
                                 }
                             }
                         }

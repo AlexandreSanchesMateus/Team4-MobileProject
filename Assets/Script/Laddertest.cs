@@ -34,7 +34,7 @@ public class Laddertest : MonoBehaviour
         else
         {
             elapsedTime = 0;
-            percentageCompleted = (elapsedTime / duration) + 0.03f;
+            percentageCompleted = (elapsedTime / duration) + 0.1f;
             LerpStart = transform.position;
             LerpEnd = startPos;
         }
