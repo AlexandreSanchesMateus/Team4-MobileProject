@@ -22,11 +22,11 @@ public class ItemManager : MonoBehaviour
 
         Instance = this;
         playerItems = new List<Item>();
-        AddItem("grey");
-        AddItem("red");
+        /*AddItem("grey");
+        AddItem("red");*/
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -36,7 +36,7 @@ public class ItemManager : MonoBehaviour
         {
             AddItem(itemList[Random.Range(0, itemList.Count)].m_name);
         }
-    }
+    }*/
 
     public void AddItem(string name)
     {
@@ -47,13 +47,16 @@ public class ItemManager : MonoBehaviour
                 Item newItem = (new Item(thisItem));
                 playerItems.Add(newItem);
                 AddItemToViewport(newItem);
-
+                
                 /*if(name == "gris" && PlayGameService.Instance.isConnectedToGoogleService)
                     Social.ReportProgress("Cfjewijawiu_QA", 100, null);
                 else if(name == "red" && PlayGameService.Instance.isConnectedToGoogleService)
                     Social.ReportProgress("Cfjewijawiu_QA", 100, null);*/
+                return;
             }
         }
+
+        Debug.LogWarning("The item '" + name + "' cannot be found, please check the name");
     }
     
     public void RemoveItem(Item itemToRemove)

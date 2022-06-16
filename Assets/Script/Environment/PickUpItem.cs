@@ -10,7 +10,7 @@ public class PickUpItem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            ItemManager.Instance.AddItem("itemName");
+            ItemManager.Instance.AddItem(itemName);
             Destroy(transform.gameObject);
         }
     }
