@@ -6,11 +6,15 @@ public class PressurePlate : MonoBehaviour
 {
     public bool isPressed;
     [SerializeField] private LayerTP portail = null;
+    [SerializeField] private DraggableObj draggableObj = null;
 
     private void Start()
     {
         if (portail)
             portail.gameObject.GetComponent<Collider2D>().enabled = false;
+
+        if (draggableObj)
+            draggableObj.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,6 +25,9 @@ public class PressurePlate : MonoBehaviour
 
             if (portail)
                 portail.gameObject.GetComponent<Collider2D>().enabled = true;
+
+            if (draggableObj)
+                draggableObj.enabled = true;
             /*if (transform.position.y < 0.39)
             {
                 gameObject.transform.position = Vector2.Lerp(transform.position, new Vector2(transform.position.x, (transform.position.y) - 0.3f), 0.1f);
@@ -38,6 +45,9 @@ public class PressurePlate : MonoBehaviour
 
             if (portail)
                 portail.gameObject.GetComponent<Collider2D>().enabled = false;
+
+            if (draggableObj)
+                draggableObj.enabled = false;
         }
     }
 }

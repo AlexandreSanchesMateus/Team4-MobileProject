@@ -5,29 +5,28 @@ using UnityEngine;
 public class EndOfLadder : MonoBehaviour
 {
     public GameObject otherArrivee;
-    public PlayerScriptTest player;
+    public PlayerMovement2 player;
     public PlayerIntPreset preset;
+
+    public Ladder ladder;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Arrive");
-            player.onLadder = false;
-            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            PlayerMovement2.Instance.playerMovementEnable = true;
+            player._rb.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+            player._rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-            if (preset.inLayer1)
-            {
-                preset.inLayer2 = true;
-                preset.inLayer1 = false;
-            }
-            else
-            {
-                preset.inLayer1 = true;
-                preset.inLayer2 = false;
-            }
+            player.GetComponent<CapsuleCollider2D>().isTrigger = false;
+            player.GetComponent<Rigidbody2D>().gravityScale = 1f;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            ladder.elevating = false;
+
 
             gameObject.SetActive(false);
             otherArrivee.SetActive(true);
+            
             
         }
     }
