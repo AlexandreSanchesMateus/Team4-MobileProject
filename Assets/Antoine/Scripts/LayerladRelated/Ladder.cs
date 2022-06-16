@@ -29,6 +29,7 @@ public class Ladder : Interactable
         Debug.Log("Interaction avec l'échelle");
         PlayerMovement2.Instance.playerMovementEnable = false;
         player._rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         player.GetComponent<CapsuleCollider2D>().isTrigger = true;
         player.GetComponent<Rigidbody2D>().gravityScale = 0f;
 
