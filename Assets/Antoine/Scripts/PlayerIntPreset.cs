@@ -10,35 +10,16 @@ public class PlayerIntPreset : MonoBehaviour
 
     // Booleans
 
-    public bool inLayer1;
-    public bool inLayer2;
-    public bool inLayer3;
-    public bool inLayer4;
-    public bool inLayer5;
-    public bool inLayer6;
+   
 
     private void Start()
     {
-        inLayer1 = true;
+    
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            CheckInteraction();
-
-        if (inLayer1 == true)
-        {
-            Physics2D.IgnoreLayerCollision(6, 7);
-            gameObject.layer = 6;
-        }
-            
-
-        if (inLayer2 == true)
-        {
-            Physics2D.IgnoreLayerCollision(7, 6);
-            gameObject.layer = 7;
-        }
+       
             
     }
 
