@@ -35,7 +35,7 @@ public class Openable : MonoBehaviour
 
             if (!isOpen)
             {
-                neige.gameObject.SetActive(false);
+                
                 allume.Play();
                 StartCoroutine("fire");
                 animator.SetBool("LightTorch", true);
@@ -52,6 +52,8 @@ public class Openable : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         constant.Play();
+        yield return new WaitForSeconds(0.5f);
+        neige.gameObject.SetActive(false);
     }
 
 
