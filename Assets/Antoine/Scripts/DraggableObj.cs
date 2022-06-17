@@ -64,10 +64,9 @@ public class DraggableObj : MonoBehaviour
         }
     }
 
-            // Drag de L'objet
+    // Drag de L'objet
     public void OnMouseDrag()
     {
-        
         if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
         {
             Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>());
@@ -75,6 +74,7 @@ public class DraggableObj : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, GetMousePos() + draggOffset, 10);
         }        
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(nom))
@@ -84,6 +84,7 @@ public class DraggableObj : MonoBehaviour
             
         }
     }
+
     public Vector3 GetMousePos()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
