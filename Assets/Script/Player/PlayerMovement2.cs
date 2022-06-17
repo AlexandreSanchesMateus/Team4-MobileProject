@@ -149,7 +149,7 @@ public class PlayerMovement2 : MonoBehaviour
         canJump = false;
         foreach (Collider2D other in _info)
         {
-            if (other.gameObject.CompareTag("Platform"))
+            if (other.gameObject.CompareTag("Platform")|| other.gameObject.CompareTag("Draggable"))
             {
                 canJump = true;
                 if (isJumping)
