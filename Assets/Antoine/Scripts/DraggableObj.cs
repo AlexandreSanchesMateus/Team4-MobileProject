@@ -46,8 +46,8 @@ public class DraggableObj : MonoBehaviour
         {
             if (goodPosition == false)
             {
-                transform.position = initialPos;
-                
+               // transform.position = initialPos;
+               
             }
             else
             {
