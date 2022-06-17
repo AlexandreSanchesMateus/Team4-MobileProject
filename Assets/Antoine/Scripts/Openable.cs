@@ -8,7 +8,6 @@ public class Openable : MonoBehaviour
     public Sprite open;
     public Sprite closed;
 
-    public GameObject flamme;
     public GameObject neige;
 
     private SpriteRenderer sr;
@@ -36,7 +35,6 @@ public class Openable : MonoBehaviour
 
             if (!isOpen)
             {
-                flamme.gameObject.SetActive(true);
                 neige.gameObject.SetActive(false);
                 allume.Play();
                 StartCoroutine("fire");
