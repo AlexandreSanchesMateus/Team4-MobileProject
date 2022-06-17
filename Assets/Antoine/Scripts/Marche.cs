@@ -38,11 +38,11 @@ public class Marche : MonoBehaviour
             }
 
 
-            else if (number == 4)
+/*            else if (number == 4)
             {
                 elevator.march1 = true;
                 gameObject.SetActive(false);
-            }
+            }*/
         }
         
             

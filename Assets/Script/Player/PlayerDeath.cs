@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDeath : MonoBehaviour
 {
 
-    public GameObject respawn;
+    public Transform respawn;
     private AudioSource splash;
     /* private void OnTriggerEnter2D(Collider2D collision)
      {
@@ -33,6 +33,6 @@ public class PlayerDeath : MonoBehaviour
         
         yield return new WaitForSeconds(1);
         
-        transform.position = respawn.transform.position;
+        transform.position = respawn.position;
     }
 }

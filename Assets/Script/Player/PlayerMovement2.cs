@@ -212,6 +212,9 @@ public class PlayerMovement2 : MonoBehaviour
                // other.gameObject.GetComponent<Elevator>().Interact();
                 return;
             }
+            else if (other.gameObject.CompareTag("TP")){
+                other.gameObject.GetComponent<TP>().teleport();
+            }
         }
 
         if (canJump)

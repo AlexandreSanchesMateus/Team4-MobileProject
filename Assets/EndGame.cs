@@ -9,6 +9,9 @@ public class EndGame : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene(scene);
+        if (collision.tag == "Player")
+        {
+            SceneManager.LoadScene(scene);
+        }
     }
 }
