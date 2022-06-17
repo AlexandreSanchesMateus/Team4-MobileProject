@@ -20,7 +20,6 @@ TagManager:
   - Rock
   - Branch
   - TP
-  - Snowball
   layers:
   - Default
   - TransparentFX

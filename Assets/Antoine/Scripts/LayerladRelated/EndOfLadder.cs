@@ -26,8 +26,8 @@ public class EndOfLadder : MonoBehaviour
 
             gameObject.SetActive(false);
             otherArrivee.SetActive(true);
-            GyroManager.Instance.isGyroEnable = true;
-
+            
+            
         }
     }
 }

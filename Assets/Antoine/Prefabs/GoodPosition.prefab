@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3221558344353536076}
   m_Layer: 0
   m_Name: GoodPosition
-  m_TagString: Cascade
+  m_TagString: GoodPosition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
