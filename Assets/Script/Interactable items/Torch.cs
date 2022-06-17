@@ -7,10 +7,6 @@ public class Torch : MonoBehaviour
     [SerializeField] private List<GameObject> iceToMelt = new List<GameObject>();
     public int timeToMelt;
 
-    private bool shouldLight = true;
-    private bool shouldStartMelting = false;
-    private float extinguishTimer = 0f;
-
     private Animator animator;
 
     private void Start()
@@ -18,33 +14,17 @@ public class Torch : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-    public void AskToLight()
-    {
-        if (shouldLight)
-            TontonJohnny();
-        else
-            Pompiers();
-    }
-
-    private void TontonJohnny()
+    public void LightTorch()
     {
         animator.SetBool("LightTorch", true);
         StartMelt();
-        shouldLight = false;
-    }
-
-    private void Pompiers()
-    {
-        animator.SetBool("LightTorch", false);
-        extinguishTimer = 0f;
+        StartCoroutine("MeltIce");
     }
 
     private void StartMelt()
     {
         foreach (GameObject ice in iceToMelt)
             ice.GetComponent<Animator>().SetBool("isMelting", true);
-
-        
     }
 
     IEnumerator MeltIce()

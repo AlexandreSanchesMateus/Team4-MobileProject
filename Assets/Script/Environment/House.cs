@@ -13,6 +13,7 @@ public class House : Interactable
     {
         GameObject a = Instantiate(prefab);
         a.transform.position = spawnPos.position;
+        a.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
         a.GetComponent<DraggableObj>().goodPos = plaque;
         a.GetComponent<DraggableObj>().nom = "GoodPosition2";
         a.GetComponent<DraggableObj>().player = PlayerMovement2.Instance;

@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +29,7 @@ public class Elevator : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if(march1 && march2 && march3 && march4)
+        if(march1 && march2 && march3)
         {
             Debug.Log("Interaction avec l'échelle");
             PlayerMovement2.Instance.playerMovementEnable = false;

@@ -149,7 +149,7 @@ public class PlayerMovement2 : MonoBehaviour
         canJump = false;
         foreach (Collider2D other in _info)
         {
-            if (other.gameObject.CompareTag("Platform"))
+            if (other.gameObject.CompareTag("Platform")|| other.gameObject.CompareTag("Draggable"))
             {
                 canJump = true;
                 if (isJumping)
@@ -211,6 +211,9 @@ public class PlayerMovement2 : MonoBehaviour
                 Debug.Log("INTERACTION");
                // other.gameObject.GetComponent<Elevator>().Interact();
                 return;
+            }
+            else if (other.gameObject.CompareTag("TP")){
+                other.gameObject.GetComponent<TP>().teleport();
             }
         }
 
