@@ -17,8 +17,11 @@ public class Openable : MonoBehaviour
     private AudioSource allume;
     public AudioSource constant;
 
+    public Animator animator;
+
     private void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         allume = gameObject.GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
 
@@ -37,6 +40,7 @@ public class Openable : MonoBehaviour
                 neige.gameObject.SetActive(false);
                 allume.Play();
                 StartCoroutine("fire");
+                animator.SetBool("LightTorch", true);
             }
 
             
