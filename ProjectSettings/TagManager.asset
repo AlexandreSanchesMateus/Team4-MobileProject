@@ -19,6 +19,7 @@ TagManager:
   - Layer 0
   - Rock
   - Branch
+  - TP
   layers:
   - Default
   - TransparentFX

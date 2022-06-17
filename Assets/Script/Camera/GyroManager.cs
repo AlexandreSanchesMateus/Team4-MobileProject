@@ -78,12 +78,6 @@ public class GyroManager : MonoBehaviour
              else if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
                  _portrait = false;
 
-            /*if (Input.GetKeyDown(KeyCode.A))
-            {
-                _portrait = !_portrait;
-                Debug.Log("PRESSED");
-            }*/
-
             if(_last != _portrait)
             {
                 isReorienting = true;
@@ -143,6 +137,7 @@ public class GyroManager : MonoBehaviour
 
                 _portraitMode.portraitModeEnable = false;
                 PlayerMovement2.Instance.playerMovementEnable = true;
+                ItemManager.Instance.EnableItemManager(false);
             }
         }
     }

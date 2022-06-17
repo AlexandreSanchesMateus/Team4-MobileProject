@@ -22,8 +22,8 @@ public class ItemManager : MonoBehaviour
 
         Instance = this;
         playerItems = new List<Item>();
-        /*AddItem("grey");
-        AddItem("red");*/
+        AddItem("grey");
+        AddItem("red");
     }
 
     /*private void Update()
