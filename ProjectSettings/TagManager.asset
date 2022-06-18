@@ -21,6 +21,7 @@ TagManager:
   - Branch
   - TP
   - Snowball
+  - Buisson
   layers:
   - Default
   - TransparentFX
