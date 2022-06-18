@@ -6,6 +6,7 @@ public class TP : MonoBehaviour
 {
     public Transform Lieu;
     public GameObject player;
+    public GameObject Spawn;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +22,13 @@ public class TP : MonoBehaviour
     public void teleport()
     {
         player.transform.position = Lieu.position;
+    }
+
+    void OnTriggerEnter2D(Collider2D truc)
+    {
+        if (truc.tag == "Player")
+        {
+            Spawn.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        }
     }
 }
