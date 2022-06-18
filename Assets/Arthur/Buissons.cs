@@ -18,6 +18,15 @@ public class Buissons : MonoBehaviour
         
     }
 
+    private void OnMouseDown()
+    {
+        if (GyroManager.Instance._portrait && PortraitMode._selectedItem == null)
+        {
+            Bush();
+        }
+
+    }
+
     public void Bush()
     {
         Effet.Play();

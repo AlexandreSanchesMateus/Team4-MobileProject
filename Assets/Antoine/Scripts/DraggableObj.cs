@@ -21,12 +21,14 @@ public class DraggableObj : MonoBehaviour
     // Booleans
     public bool goodPosition;
     private bool movable = true;
+  
 
     private AudioSource chting;
     public void Start()
     {
         initialPos = transform.position;
         chting = gameObject.GetComponent<AudioSource>();
+        
     }
 
     
@@ -52,7 +54,7 @@ public class DraggableObj : MonoBehaviour
             else
             {
                 transform.position = goodPos.transform.position;
-                movable = false;
+                //movable = false;
                 chting.Play();
                 CheckInteraction();
                 Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
@@ -77,11 +79,14 @@ public class DraggableObj : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(nom))
+        if (collision.gameObject.CompareTag(nom) )
         {           
             goodPosition = true;
+                
             //goodPos = collision.gameObject;
-            
+            if (collision.gameObject.CompareTag("Maison"))
+                collision.gameObject.tag = null;
+
         }
     }
 
