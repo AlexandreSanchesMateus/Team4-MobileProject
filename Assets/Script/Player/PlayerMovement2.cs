@@ -46,10 +46,13 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] private LayerMask _interactionLayer;
 
     [Header("Sound")]
-    public AudioClip bruitDePas;
+    public GameObject pasNeige;
+    public AudioSource bruitDePas;
+    public bool isMoving;
 
     private void Start()
     {
+        bruitDePas = pasNeige.GetComponent<AudioSource>();
         Instance = this;
         _rb = gameObject.GetComponent<Rigidbody2D>();
 
@@ -64,17 +67,30 @@ public class PlayerMovement2 : MonoBehaviour
         // -------------------------------------------------------- //
 
         // ATTENTION : DOIT ETRE RETIRER AVANT DE BUILD
-
+        
         if (!playerMovementEnable)
         {
             direction.x = Input.GetAxis("Horizontal");
             direction.y = Input.GetAxis("Vertical");
+
+            if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D))
+                isMoving = true;
+            else
+                isMoving = false;
+
+            if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.D))
+            bruitDePas.Play();
+
+            if ((Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.D)) && isMoving == false)
+                bruitDePas.Pause();
+
 
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
             {
                 jump = true;
                 isJumping = true;
                 animator.SetBool("Jumping", true);
+                
             }
 
             return;
@@ -91,6 +107,7 @@ public class PlayerMovement2 : MonoBehaviour
                     if(_coroutine != null)
                         StopCoroutine(_coroutine);
                     _coroutine = StartCoroutine(AssignedMovementTouch(_touch));
+
                 }
             }
             else if ((_touch.phase == TouchPhase.Moved || _touch.phase == TouchPhase.Stationary))
