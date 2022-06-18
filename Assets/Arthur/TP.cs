@@ -7,10 +7,14 @@ public class TP : MonoBehaviour
     public Transform Lieu;
     public GameObject player;
     public GameObject Spawn;
+    public GameObject Canvas;
+    private float time;
+    private Animator animator;
+    public AudioSource monter;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = Canvas.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -21,7 +25,7 @@ public class TP : MonoBehaviour
     
     public void teleport()
     {
-        player.transform.position = Lieu.position;
+        StartCoroutine(Transi());
     }
 
     void OnTriggerEnter2D(Collider2D truc)
@@ -30,5 +34,14 @@ public class TP : MonoBehaviour
         {
             Spawn.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
+    }
+
+    IEnumerator Transi()
+    {
+        animator.SetBool("Active", true);
+        monter.Play();
+        player.transform.position = Lieu.position;
+        yield return new WaitForSeconds(1.5f);
+        animator.SetBool("Active", false);
     }
 }

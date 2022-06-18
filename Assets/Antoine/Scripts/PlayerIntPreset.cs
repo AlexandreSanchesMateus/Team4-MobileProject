@@ -46,6 +46,10 @@ public class PlayerIntPreset : MonoBehaviour
                     rc.transform.GetComponent<Interactable>().Interact();
                     return;
                 }
+                if (rc.transform.GetComponent<Buissons>())
+                {
+                    rc.transform.GetComponent<Buissons>().Bush();
+                }
             }
         }
     }
