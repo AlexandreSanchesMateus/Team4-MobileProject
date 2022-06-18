@@ -24,7 +24,7 @@ public class Elevator : MonoBehaviour
     public bool march1;
     public bool march2;
     public bool march3;
-    public bool march4;
+    
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
