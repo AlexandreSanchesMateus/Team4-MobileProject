@@ -64,7 +64,7 @@ public class DraggableObj : MonoBehaviour
                 chting.Play();
                 CheckInteraction();
  
-                    Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
+                    //Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
                 //unlockedObj.open = true;
 
             }
