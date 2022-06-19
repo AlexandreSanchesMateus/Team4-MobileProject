@@ -21,13 +21,19 @@ public class DraggableObj : MonoBehaviour
     // Booleans
     public bool goodPosition;
     private bool movable = true;
+    [SerializeField] private bool cailloux;
   
 
     private AudioSource chting;
+
+    private void Awake()
+    {
+        chting = gameObject.GetComponent<AudioSource>();
+    }
     public void Start()
     {
         initialPos = transform.position;
-        chting = gameObject.GetComponent<AudioSource>();
+        
         
     }
 
@@ -57,10 +63,13 @@ public class DraggableObj : MonoBehaviour
                 //movable = false;
                 chting.Play();
                 CheckInteraction();
-                Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
+ 
+                    //Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
                 //unlockedObj.open = true;
 
             }
+
+            
 
             PortraitMode.canDoAnything = true;
         }
@@ -87,6 +96,15 @@ public class DraggableObj : MonoBehaviour
             if (collision.gameObject.CompareTag("Maison"))
                 collision.gameObject.tag = null;
 
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(nom))
+        {
+            if (cailloux)
+                goodPosition = false;
         }
     }
 

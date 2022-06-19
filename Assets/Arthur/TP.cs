@@ -4,44 +4,39 @@ using UnityEngine;
 
 public class TP : MonoBehaviour
 {
-    public Transform Lieu;
-    public GameObject player;
-    public GameObject Spawn;
-    public GameObject Canvas;
-    private float time;
-    private Animator animator;
-    public AudioSource monter;
-    // Start is called before the first frame update
-    void Start()
-    {
-        animator = Canvas.GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
+   
+    public GameObject Spawn;
+        
+    
+    // Start is called before the first frame update
+    [SerializeField] private Transform Lieu;
+    [SerializeField] private int newLayerID = -1;
+    [SerializeField] private AudioSource monter;
+
+    private bool isPlayerInside;
+
+
     public void teleport()
     {
-        StartCoroutine(Transi());
+        if (isPlayerInside)
+            LayerManager2.Instance.TransitionScreen(Lieu.position, newLayerID);
+        
     }
 
-    void OnTriggerEnter2D(Collider2D truc)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        if (truc.tag == "Player")
+        if (collider.tag == "Player")
         {
+            isPlayerInside = true;
             Spawn.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
     }
 
-    IEnumerator Transi()
+    void OnTriggerExit2D(Collider2D collider)
     {
-        animator.SetBool("Active", true);
-        monter.Play();
-        player.transform.position = Lieu.position;
-        yield return new WaitForSeconds(1.5f);
-        animator.SetBool("Active", false);
+        if (collider.tag == "Player")
+            isPlayerInside = false;
     }
+   
 }

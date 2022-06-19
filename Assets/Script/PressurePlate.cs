@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
+
     public bool isPressed;
-    [SerializeField] private LayerTP portail = null;
+    [SerializeField] private TP portail = null;
     [SerializeField] private DraggableObj draggableObj = null;
 
     private void Start()
@@ -19,7 +20,7 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.gameObject.CompareTag("Rock") || collision.transform.gameObject.CompareTag("Player"))
+        if (collision.transform.gameObject.CompareTag("Draggable") || collision.transform.gameObject.CompareTag("Player"))
         {
             isPressed = true;
 
@@ -28,6 +29,8 @@ public class PressurePlate : MonoBehaviour
 
             if (draggableObj)
                 draggableObj.enabled = true;
+
+           
             /*if (transform.position.y < 0.39)
             {
                 gameObject.transform.position = Vector2.Lerp(transform.position, new Vector2(transform.position.x, (transform.position.y) - 0.3f), 0.1f);
@@ -39,7 +42,7 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.gameObject.CompareTag("Rock") || collision.transform.gameObject.CompareTag("Player"))
+        if (collision.transform.gameObject.CompareTag("Draggable") || collision.transform.gameObject.CompareTag("Player"))
         {
             isPressed = false;
 
