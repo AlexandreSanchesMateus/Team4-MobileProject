@@ -40,8 +40,8 @@ public class TP : MonoBehaviour
     {
         animator.SetBool("Active", true);
         monter.Play();
-        player.transform.position = Lieu.position;
         yield return new WaitForSeconds(1.5f);
+        player.transform.position = Lieu.position;
         animator.SetBool("Active", false);
     }
 }
