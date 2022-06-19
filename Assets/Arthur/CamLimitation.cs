@@ -6,11 +6,11 @@ public class CamLimitation : MonoBehaviour
 {
     public GameObject _targetCam;
     public GameObject Canvas;
-    private float alpha;
+    private float Alpha;
     // Start is called before the first frame update
     void Start()
     {
-
+        Alpha = 0f;
     }
 
     // Update is called once per frame
@@ -24,20 +24,23 @@ public class CamLimitation : MonoBehaviour
         if (truc.tag == "Limite")
         {
             _targetCam.transform.position = PlayerMovement2.Instance.gameObject.transform.position;
+            Debug.Log("Limite");
         }
 
         if(truc.tag == "Noircissement")
         {
-            InvokeRepeating("Noircissement", 1f, 1f);
+            InvokeRepeating("Noir", 1f, 1f);
         }
     }
 
-    public void Noircissement()
+    public void Noir()
     {
-        alpha = alpha + 0.2f;
-        if (alpha == 1f)
+        Alpha = Alpha + 0.2f;
+        Canvas.GetComponent<CanvasGroup>().alpha = Alpha;
+        if (Alpha == 1f)
         {
-
+            _targetCam.transform.position = PlayerMovement2.Instance.gameObject.transform.position;
+            Alpha = 0f;
         }
     }
 }

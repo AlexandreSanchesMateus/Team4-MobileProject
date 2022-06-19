@@ -23,6 +23,8 @@ TagManager:
   - Snowball
   - Buisson
   - Maison
+  - Limite
+  - Noircissement
   layers:
   - Default
   - TransparentFX
