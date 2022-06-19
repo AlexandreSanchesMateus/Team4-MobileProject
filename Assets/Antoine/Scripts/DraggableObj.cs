@@ -63,10 +63,7 @@ public class DraggableObj : MonoBehaviour
                 //movable = false;
                 chting.Play();
                 CheckInteraction();
-
-                if (cailloux)
-                    goodPosition = false;
-                else
+ 
                     Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>(), false);
                 //unlockedObj.open = true;
 
@@ -99,6 +96,15 @@ public class DraggableObj : MonoBehaviour
             if (collision.gameObject.CompareTag("Maison"))
                 collision.gameObject.tag = null;
 
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(nom))
+        {
+            if (cailloux)
+                goodPosition = false;
         }
     }
 
