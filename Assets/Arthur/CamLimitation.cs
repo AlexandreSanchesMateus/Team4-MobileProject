@@ -34,10 +34,10 @@ public class CamLimitation : MonoBehaviour
 
     public void Noircissement()
     {
-        Alpha = Alpha + 0.2f;
+        alpha = alpha + 0.2f;
         if (alpha == 1f)
         {
-            Canvas.GetComponent<canvasGroup>Alpha;
+
         }
     }
 }
