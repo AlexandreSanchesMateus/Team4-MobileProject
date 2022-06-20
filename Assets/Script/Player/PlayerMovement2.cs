@@ -199,9 +199,13 @@ public class PlayerMovement2 : MonoBehaviour
             if(direction.x > 0 && !m_FacingRight || direction.x < 0 && m_FacingRight)
                 Flip();
 
-            //bruitDePas.Play();
-
+            if(canJump)
+                bruitDePas.Play();
+            else
+                bruitDePas.Pause();
         }
+        else
+            bruitDePas.Pause();
 
         if (jump)
         {
