@@ -5,7 +5,6 @@ using UnityEngine;
 public class Torch : MonoBehaviour
 {
     [SerializeField] private List<GameObject> iceToMelt = new List<GameObject>();
-    public int timeToMelt;
 
     private Animator animator;
 
@@ -17,19 +16,18 @@ public class Torch : MonoBehaviour
     public void LightTorch()
     {
         animator.SetBool("LightTorch", true);
-        StartMelt();
         StartCoroutine("MeltIce");
     }
 
-    private void StartMelt()
-    {
-        foreach (GameObject ice in iceToMelt)
-            ice.GetComponent<Animator>().SetBool("isMelting", true);
-    }
 
     IEnumerator MeltIce()
     {
-        yield return new WaitForSeconds(timeToMelt);
+        yield return new WaitForSeconds(1.5f);
+
+        foreach (GameObject ice in iceToMelt)
+            ice.GetComponent<Animator>().SetBool("isMelting", true);
+
+        yield return new WaitForSeconds(0.7f);
 
         foreach (GameObject ice in iceToMelt)
             Destroy(ice.gameObject);
