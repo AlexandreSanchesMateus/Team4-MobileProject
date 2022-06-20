@@ -159,10 +159,13 @@ public class PlayerMovement2 : MonoBehaviour
     {
         Collider2D[] _info = Physics2D.OverlapCircleAll(_groundPos.position, _checkRadius, _checkLayer);
         canJump = false;
+
+
         foreach (Collider2D other in _info)
         {
             if (other.gameObject.CompareTag("Platform")|| other.gameObject.CompareTag("Draggable"))
             {
+                Debug.Log(other.gameObject.name);
                 canJump = true;
                 if (isJumping)
                 {

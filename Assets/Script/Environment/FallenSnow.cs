@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FallenSnow : MonoBehaviour
 {
+    [SerializeField] private GameObject Spawn;
     private GameObject groundRef;
     private Sprite _sp;
     private Rigidbody2D _rb;
@@ -26,6 +27,7 @@ public class FallenSnow : MonoBehaviour
         //    transform.gameObject.GetComponent<SpriteRenderer>().sprite = null;
         //    transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         //}
+        Spawn.transform.position = new Vector2(486.31f, 14.64f);
         if (collision.gameObject.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject.GetComponent<BoxCollider2D>());
@@ -38,6 +40,7 @@ public class FallenSnow : MonoBehaviour
 
     private IEnumerator AddWeight()
     {
+    
         yield return new WaitForSeconds (1.5f);
         _rb.bodyType = RigidbodyType2D.Static;
     }
