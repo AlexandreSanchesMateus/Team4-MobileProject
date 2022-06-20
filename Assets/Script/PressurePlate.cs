@@ -6,6 +6,9 @@ public class PressurePlate : MonoBehaviour
 {
 
     public bool isPressed;
+    public float speed;
+
+    [SerializeField] private GameObject barrier;
     [SerializeField] private TP portail = null;
     [SerializeField] private DraggableObj draggableObj = null;
 
@@ -25,7 +28,10 @@ public class PressurePlate : MonoBehaviour
             isPressed = true;
 
             if (portail)
+            {
                 portail.gameObject.GetComponent<Collider2D>().enabled = true;
+                barrier.gameObject.SetActive(false);
+            }
 
             if (draggableObj)
                 draggableObj.enabled = true;
@@ -47,7 +53,11 @@ public class PressurePlate : MonoBehaviour
             isPressed = false;
 
             if (portail)
+            {
                 portail.gameObject.GetComponent<Collider2D>().enabled = false;
+                barrier.gameObject.SetActive(true);
+            }
+
 
             if (draggableObj)
                 draggableObj.enabled = false;

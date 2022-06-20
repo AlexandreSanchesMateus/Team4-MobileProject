@@ -47,12 +47,12 @@ public class PlayerMovement2 : MonoBehaviour
 
     [Header("Sound")]
     public GameObject pasNeige;
-    public AudioSource bruitDePas;
     public bool isMoving;
+    
 
     private void Start()
     {
-        bruitDePas = pasNeige.GetComponent<AudioSource>();
+        
         Instance = this;
         _rb = gameObject.GetComponent<Rigidbody2D>();
 
@@ -78,12 +78,7 @@ public class PlayerMovement2 : MonoBehaviour
             else
                 isMoving = false;
 
-            if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.D))
-            bruitDePas.Play();
-
-            if ((Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.D)) && isMoving == false)
-                bruitDePas.Pause();
-
+          
 
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
             {
@@ -199,13 +194,11 @@ public class PlayerMovement2 : MonoBehaviour
             if(direction.x > 0 && !m_FacingRight || direction.x < 0 && m_FacingRight)
                 Flip();
 
-            if(canJump)
-                bruitDePas.Play();
-            else
-                bruitDePas.Pause();
+            
+            
+                
         }
-        else
-            bruitDePas.Pause();
+        
 
         if (jump)
         {
@@ -215,6 +208,8 @@ public class PlayerMovement2 : MonoBehaviour
         }
 
     }
+
+    
 
     private Vector2 GetDirection(Vector2 screenPosition)
     {
