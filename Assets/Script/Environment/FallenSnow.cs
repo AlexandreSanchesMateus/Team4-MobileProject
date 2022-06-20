@@ -27,13 +27,14 @@ public class FallenSnow : MonoBehaviour
         //    transform.gameObject.GetComponent<SpriteRenderer>().sprite = null;
         //    transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         //}
-        Spawn.transform.position = new Vector2(486.31f, 14.64f);
+        
         if (collision.gameObject.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject.GetComponent<BoxCollider2D>());
             Collider2D _newCollider = gameObject.AddComponent<BoxCollider2D>();
             //_newCollider.isTrigger = false;
             _rb.gravityScale = 1;
+            Spawn.transform.position = new Vector2(486.31f, 14.64f);
             StartCoroutine("AddWeight");
         }
     }

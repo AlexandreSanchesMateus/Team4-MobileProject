@@ -16,28 +16,28 @@ public class cuttable2 : MonoBehaviour
     private float elapsedTime;
     private float duration = 4f;
 
+    [SerializeField] private Animator lanimTroNazeMdr;
+
     private bool shouldSpawn = true;
+
+    private void Start()
+    {
+        
+    }
 
     private void Update()
     {
         elapsedTime += Time.deltaTime;
         float percentageCompleted = (elapsedTime / duration);
 
-        if (isMoving)
-        {
-            spawnedLog.transform.position = Vector2.Lerp(departure.transform.position, arrival.transform.position, percentageCompleted);
-        }
+        
     }
 
     public void CutRope()
     {
         if (shouldSpawn)
         {
-            spawnedLog = Instantiate(logToSpawn, oldTree.transform);
-            isMoving = true;
-            StartCoroutine("AddWeight");
-            elapsedTime = 0;
-            shouldSpawn = false;
+            lanimTroNazeMdr.SetBool("Cassage", true);
         }
     }
 
