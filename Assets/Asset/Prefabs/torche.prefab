@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 3418566693392604315}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c32b17d2fb77acf4db2605acfe38c162, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8800b4bfaf665b644a67ac1edb25439d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 3418566694516670275}
   - component: {fileID: 3418566694516670284}
   - component: {fileID: 81057199088950000}
-  - component: {fileID: 6353054625549809694}
+  - component: {fileID: 7620612837959344885}
   m_Layer: 0
   m_Name: torche
   m_TagString: Untagged
@@ -204,8 +204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153f91bf53978a942880bd642b6b0396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &6353054625549809694
-BoxCollider2D:
+  iceToMelt: []
+  timeToMelt: 0
+--- !u!60 &7620612837959344885
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -227,6 +229,48 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.15, y: 5.15}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.185, y: -1.935}
+      - {x: 0.175, y: -1.8249999}
+      - {x: 0.16499999, y: -1.655}
+      - {x: 0.145, y: -1.145}
+      - {x: 0.155, y: -1.135}
+      - {x: 0.175, y: -0.555}
+      - {x: 0.225, y: 0.16499999}
+      - {x: 0.265, y: 0.505}
+      - {x: 0.285, y: 0.755}
+      - {x: 0.345, y: 1.1949999}
+      - {x: 0.36499998, y: 1.395}
+      - {x: 0.415, y: 1.7049999}
+      - {x: 0.415, y: 1.885}
+      - {x: 0.39499998, y: 2.0449998}
+      - {x: 0.345, y: 2.165}
+      - {x: 0.295, y: 2.2549999}
+      - {x: 0.255, y: 2.375}
+      - {x: 0.225, y: 2.415}
+      - {x: 0.175, y: 2.415}
+      - {x: 0.085, y: 2.405}
+      - {x: -0.105, y: 2.405}
+      - {x: -0.225, y: 2.415}
+      - {x: -0.285, y: 2.345}
+      - {x: -0.325, y: 2.215}
+      - {x: -0.415, y: 2.085}
+      - {x: -0.45499998, y: 1.935}
+      - {x: -0.465, y: 1.885}
+      - {x: -0.465, y: 1.805}
+      - {x: -0.345, y: 0.955}
+      - {x: -0.325, y: 0.675}
+      - {x: -0.285, y: 0.195}
+      - {x: -0.265, y: 0.005}
+      - {x: -0.255, y: -0.225}
+      - {x: -0.225, y: -0.73499995}
+      - {x: -0.225, y: -1.275}
+      - {x: -0.21499999, y: -1.675}
+      - {x: -0.205, y: -1.685}
+      - {x: -0.205, y: -2.355}
+      - {x: -0.095, y: -2.425}
+      - {x: 0.074999996, y: -2.425}
+      - {x: 0.16499999, y: -2.375}
+      - {x: 0.195, y: -2.335}
+      - {x: 0.195, y: -2.155}

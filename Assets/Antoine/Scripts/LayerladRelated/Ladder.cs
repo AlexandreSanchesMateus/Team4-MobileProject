@@ -27,22 +27,26 @@ public class Ladder : Interactable
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Interaction avec l'échelle");
-        PlayerMovement2.Instance.playerMovementEnable = false;
-        player._rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        player.GetComponent<CapsuleCollider2D>().isTrigger = true;
-        player.GetComponent<Rigidbody2D>().gravityScale = 0f;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player avec l'échelle");
+            PlayerMovement2.Instance.playerMovementEnable = false;
+            player._rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            player.GetComponent<CapsuleCollider2D>().isTrigger = true;
+            player.GetComponent<Rigidbody2D>().gravityScale = 0f;
 
 
-        elevating = true;     
+            elevating = true;
 
-        if (swap == false)
-           player.transform.position = depart1.transform.position;
+            if (swap == false)
+                player.transform.position = depart1.transform.position;
 
-        else
-            player.transform.position = depart2.transform.position;
+            else
+                player.transform.position = depart2.transform.position;
 
-         swap = !swap;
+            swap = !swap;
+        }
     }
 
     private void Update()
