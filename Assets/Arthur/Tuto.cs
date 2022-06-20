@@ -37,4 +37,10 @@ public class Tuto : MonoBehaviour
             Active = false;
         }
     }
+
+    public void Annuler()
+    {
+        tuto.SetActive(false);
+        Time.timeScale = 1f;
+    }
 }
