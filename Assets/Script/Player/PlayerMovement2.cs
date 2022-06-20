@@ -220,16 +220,21 @@ public class PlayerMovement2 : MonoBehaviour
     private void Interaction(Vector2 position)
     {
         Collider2D[] _info = Physics2D.OverlapCircleAll(position, _interactionRadius, _interactionLayer);
-        foreach(Collider2D other in _info)
+        foreach (Collider2D other in _info)
         {
             if (other.gameObject.CompareTag("Interactible"))
             {
                 Debug.Log("INTERACTION");
-               // other.gameObject.GetComponent<Elevator>().Interact();
+                // other.gameObject.GetComponent<Elevator>().Interact();
                 return;
             }
-            else if (other.gameObject.CompareTag("TP")){
+            else if (other.gameObject.CompareTag("TP"))
+            {
                 other.gameObject.GetComponent<TP>().teleport();
+            }
+            else if (other.gameObject.CompareTag("Peinture"))
+            {
+                other.gameObject.GetComponent<TutoPeinture>().Anule();
             }
         }
 

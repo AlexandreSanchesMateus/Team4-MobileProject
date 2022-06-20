@@ -25,6 +25,7 @@ TagManager:
   - Maison
   - Limite
   - Noircissement
+  - Peinture
   layers:
   - Default
   - TransparentFX
