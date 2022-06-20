@@ -11,6 +11,7 @@ public class DraggableObj : MonoBehaviour
     //public UnlockedObj unlockedObj;
 
     // GameObject
+    public GameObject halo;
     public GameObject goodPos;
     public PlayerMovement2 player;
 
@@ -22,6 +23,7 @@ public class DraggableObj : MonoBehaviour
     public bool goodPosition;
     private bool movable = true;
     [SerializeField] private bool cailloux;
+    [SerializeField] private bool caillouxMaison;
   
 
     private AudioSource chting;
@@ -69,8 +71,9 @@ public class DraggableObj : MonoBehaviour
 
             }
 
-            
-
+            if (caillouxMaison)
+                halo.gameObject.SetActive(false);
+                
             PortraitMode.canDoAnything = true;
         }
     }
@@ -83,6 +86,10 @@ public class DraggableObj : MonoBehaviour
             Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), player.GetComponent<CapsuleCollider2D>());
             if (movable == true)
                 transform.position = Vector3.MoveTowards(transform.position, GetMousePos() + draggOffset, 10);
+
+            if (caillouxMaison)
+                halo.gameObject.SetActive(true);
+                
         }        
     }
 

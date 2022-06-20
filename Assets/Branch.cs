@@ -7,11 +7,13 @@ public class Branch : MonoBehaviour
     public GameObject part1;
     public GameObject part2;
 
+    public Animator anim;
     public AudioSource audio;
 
     private void Start()
     {
         audio = gameObject.GetComponent<AudioSource>();
+        anim = gameObject.GetComponent<Animator>();
     }
     private void OnMouseDown()
     {
@@ -20,10 +22,10 @@ public class Branch : MonoBehaviour
 
             part1.SetActive(true);
             part2.SetActive(true);
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            //gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             audio.Play();
-
+            anim.SetTrigger("Cassage");
 
         }
 
