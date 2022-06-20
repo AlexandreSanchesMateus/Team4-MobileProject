@@ -52,7 +52,7 @@ public class PlayerMovement2 : MonoBehaviour
 
     private void Start()
     {
-        
+        m_FacingRight = true;
         Instance = this;
         _rb = gameObject.GetComponent<Rigidbody2D>();
 
