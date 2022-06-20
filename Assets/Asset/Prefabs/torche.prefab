@@ -127,7 +127,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 19.001953
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iceToMelt: []
+  fire: {fileID: 0}
 --- !u!60 &7620612837959344885
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -392,7 +393,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 19.815063
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

@@ -21,6 +21,7 @@ public class PlayerDeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Cascade"))
         {
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             StartCoroutine("Respawn");
             Debug.Log("Respawn");
             splash.Play();
@@ -32,7 +33,8 @@ public class PlayerDeath : MonoBehaviour
     {
         
         yield return new WaitForSeconds(1);
-        
+
         transform.position = respawn.position;
+        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 }
