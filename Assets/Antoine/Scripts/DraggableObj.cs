@@ -100,9 +100,7 @@ public class DraggableObj : MonoBehaviour
             goodPosition = true;
                 
             //goodPos = collision.gameObject;
-            if (collision.gameObject.CompareTag("Maison"))
-                collision.gameObject.tag = null;
-
+                        
         }
     }
 
