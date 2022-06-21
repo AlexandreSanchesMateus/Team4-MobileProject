@@ -16,7 +16,8 @@ public class Ladder : Interactable
     public bool elevating;
     public bool swap;
 
-    
+    public Animator animator;
+
     // A changer avec le vrai player
     public override void Interact()
     {
@@ -36,7 +37,6 @@ public class Ladder : Interactable
             player.GetComponent<CapsuleCollider2D>().isTrigger = true;
             player.GetComponent<Rigidbody2D>().gravityScale = 0f;
 
-
             elevating = true;
 
             if (swap == false)
@@ -53,11 +53,13 @@ public class Ladder : Interactable
     {
         if (elevating == true)
         {
-             if(swap == true)
-              {
+            animator.SetBool("Echelle", true);
+
+            if (swap == true)
+            {
             player.transform.position = player.transform.position + new Vector3(0, speed, 0);
             GyroManager.Instance.isGyroEnable = false;
-             }
+            }
 
 
 
@@ -65,6 +67,11 @@ public class Ladder : Interactable
             player.transform.position = player.transform.position - new Vector3(0, speed , 0);
 
 
+        }
+        
+        if (elevating == false)
+        {
+            animator.SetBool("Echelle", false);
         }
     }
 

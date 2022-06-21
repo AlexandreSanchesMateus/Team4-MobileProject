@@ -7,6 +7,7 @@ public class PlayerDeath : MonoBehaviour
 
     public Transform respawn;
     private AudioSource splash;
+    public Animator animator;
     /* private void OnTriggerEnter2D(Collider2D collision)
      {
          if (collision.gameObject.CompareTag("TrapTrigger"))
@@ -22,6 +23,7 @@ public class PlayerDeath : MonoBehaviour
         if (collision.gameObject.CompareTag("Cascade"))
         {
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            animator.Play("Mort");
             StartCoroutine("Respawn");
             Debug.Log("Respawn");
             splash.Play();
