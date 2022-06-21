@@ -19,15 +19,6 @@ public class FallenSnow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Enter");
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    groundRef.GetComponent<SpriteRenderer>().sprite = _sp;
-        //    groundRef.GetComponent<BoxCollider2D>().enabled = true;
-        //    transform.gameObject.GetComponent<SpriteRenderer>().sprite = null;
-        //    transform.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        //}
-        
         if (collision.gameObject.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject.GetComponent<BoxCollider2D>());
