@@ -70,7 +70,7 @@ public class PlayerMovement2 : MonoBehaviour
         
         if (!playerMovementEnable)
         {
-            direction.x = Input.GetAxis("Horizontal");
+            /*direction.x = Input.GetAxis("Horizontal");
             direction.y = Input.GetAxis("Vertical");
 
             if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.D))
@@ -86,7 +86,7 @@ public class PlayerMovement2 : MonoBehaviour
                 isJumping = true;
                 animator.SetBool("Jumping", true);
                 
-            }
+            }*/
 
             return;
         }
@@ -165,7 +165,6 @@ public class PlayerMovement2 : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Platform")|| other.gameObject.CompareTag("Draggable"))
             {
-                Debug.Log(other.gameObject.name);
                 canJump = true;
                 if (isJumping)
                 {
@@ -197,11 +196,7 @@ public class PlayerMovement2 : MonoBehaviour
             if(direction.x > 0 && !m_FacingRight || direction.x < 0 && m_FacingRight)
                 Flip();
 
-            
-            
-                
         }
-        
 
         if (jump)
         {
@@ -212,7 +207,6 @@ public class PlayerMovement2 : MonoBehaviour
 
     }
 
-    
 
     private Vector2 GetDirection(Vector2 screenPosition)
     {
@@ -234,10 +228,12 @@ public class PlayerMovement2 : MonoBehaviour
             else if (other.gameObject.CompareTag("TP"))
             {
                 other.gameObject.GetComponent<TP>().teleport();
+                return;
             }
             else if (other.gameObject.CompareTag("Peinture"))
             {
                 other.gameObject.GetComponent<TutoPeinture>().Anule();
+                return;
             }
         }
 
