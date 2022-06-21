@@ -10,6 +10,13 @@ public class PlayGameService : MonoBehaviour
 {
     public static PlayGameService Instance { get; private set; }
     public bool isConnectedToGoogleService;
+    public void Start()
+    {
+
+       PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+       PlayGamesPlatform.Activate();
+    }
+
 
     internal void ProcessAuthentication(SignInStatus status)
     {
@@ -26,11 +33,4 @@ public class PlayGameService : MonoBehaviour
             // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
         }
     }
-    
-/*    public void Start()
-    {
-
-       PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-       PlayGamesPlatform.Activate();
-    }*/
 }

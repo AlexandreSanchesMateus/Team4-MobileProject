@@ -22,8 +22,8 @@ public class ItemManager : MonoBehaviour
 
         Instance = this;
         playerItems = new List<Item>();
-        AddItem("red");
-        AddItem("grey");
+        //AddItem("red");
+        //AddItem("grey");
     }
 
     /*private void Update()
@@ -48,10 +48,10 @@ public class ItemManager : MonoBehaviour
                 playerItems.Add(newItem);
                 AddItemToViewport(newItem);
                 
-                /*if(name == "gris" && PlayGameService.Instance.isConnectedToGoogleService)
-                    Social.ReportProgress("Cfjewijawiu_QA", 100, null);
-                else if(name == "red" && PlayGameService.Instance.isConnectedToGoogleService)
-                    Social.ReportProgress("Cfjewijawiu_QA", 100, null);*/
+                if(name == "grey")
+                    Social.ReportProgress("CgkI1b6apO8HEAIQAw", 100, null);
+                else if(name == "red")
+                    Social.ReportProgress("CgkI1b6apO8HEAIQBA", 100, null);
                 return;
             }
         }

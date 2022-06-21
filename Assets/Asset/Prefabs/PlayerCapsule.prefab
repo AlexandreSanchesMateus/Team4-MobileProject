@@ -327,8 +327,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.19218063}
-  m_Size: {x: 1, y: 2.3843613}
+  m_Offset: {x: 0, y: -0.2345047}
+  m_Size: {x: 1, y: 3.237732}
   m_Direction: 0
 --- !u!114 &3534951512150124054
 MonoBehaviour:
@@ -366,7 +366,8 @@ MonoBehaviour:
   _interactionLayer:
     serializedVersion: 2
     m_Bits: 1
-  bruitDePas: {fileID: 0}
+  pasNeige: {fileID: 0}
+  isMoving: 0
 --- !u!114 &3534951512150124049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3534951512509428644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.888, z: 0}
+  m_LocalPosition: {x: 0, y: -1.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
