@@ -18,7 +18,6 @@ public class bruitDpas : MonoBehaviour
 
         if (direction.magnitude > 0.1f)
         {
-            Debug.Log("BITE");
 
             if (canJump)
             {

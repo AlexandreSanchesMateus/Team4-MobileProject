@@ -36,4 +36,10 @@ public class Torch : MonoBehaviour
         foreach (GameObject ice in iceToMelt)
             Destroy(ice.gameObject);
     }
+
+    IEnumerator StopFireSound()
+    {
+        yield return new WaitForSeconds(5);
+        fire.Stop();
+    }
 }
